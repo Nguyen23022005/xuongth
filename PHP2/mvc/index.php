@@ -5,6 +5,8 @@ require_once "controller/AuthController.php";
 require_once "controller/CategoryController.php";
 require_once "controller/SubjectController.php";
 require_once "controller/LessonController.php";
+require_once "controller/CartController.php";
+
 
 require_once "router/Router.php";
 require_once "middleware.php";
@@ -15,6 +17,7 @@ $authController = new AuthController();
 $categoryController = new CategoryController();
 $subjectsController = new SubjectController();
 $lessonController = new LessonController();
+$cartController = new CartController();
 
 $router->addRoute("/admin", function () {
     renderAdminView("view/layouts/dashboard.php", [], "Admin Dashboard");
@@ -60,6 +63,11 @@ $router->addRoute("/lessons", [$lessonController, "index"], ['isAdmin']);
 $router->addRoute("/lessons/create", [$lessonController, "create"]);
 $router->addRoute("/lessons/edit/{id}", [$lessonController, "edit"]);
 $router->addRoute("/lessons/delete/{id}", [$lessonController, "delete"]);
+
+//Giỏ hàng
+$router->addRoute("/carts", [$cartController, "index"]);
+$router->addRoute("/carts/add", [$cartController, "create"]);
+$router->addRoute("/carts/delete/{id}", [$cartController, "delete"]);
 
 $router->dispatch();
 ?>

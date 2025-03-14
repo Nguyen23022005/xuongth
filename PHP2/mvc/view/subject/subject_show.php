@@ -13,9 +13,13 @@
                             <img src="<?= $subjectImage ?>" alt="image" class="card-img-top" />
                             <div class="card-body d-flex flex-column">
                                 <h3 class="card-name"><?= htmlspecialchars($subject['name']); ?></h3>
-                                <p class="card-price"><?= htmlspecialchars($subject['price']); ?>đ</p>
+                                <p class="card-price"><?= number_format($subject['price'], 0); ?>đ</p>
                                 <p class="card-text flex-grow-1"><?= htmlspecialchars($subject['description'] ?? 'Không có mô tả.'); ?></p>
-                                <a href="/subjects/<?= $subject['id'] ?>" class="btn btn-info btn-sm">Xem Chi Tiết</a>
+                                <a href="/subjects/<?= $subject['id'] ?>" class="btn btn-info btn-sm mb-2">Xem Chi Tiết</a>
+                                <form action="/carts/add" method="post">
+                                    <input type="hidden" name="subject_id" value="<?= $subject['id'] ?>">
+                                    <button type="submit" class="btn btn-success btn-sm">Thêm vào giỏ hàng</button>
+                                </form>
                             </div>
                         </div>
                     </div>
