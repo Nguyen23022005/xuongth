@@ -1,6 +1,6 @@
 <h1>user List</h1>
 
-<a href="/users/create" class="btn btn-primary mb-3">Create user</a>
+<a href="/auths/create" class="btn btn-primary mb-3">Create user</a>
 
 <?php if (!empty($_SESSION['success_message'])): ?>
     <div class="alert alert-success">
@@ -21,16 +21,15 @@
     </thead>
 
     <tbody>
-        <?php foreach ($user as $users): ?>
+        <?php foreach ($auth as $auths): ?>
         <tr>
-            <td><?= $users['id'] ?></td>
-            <td><?= $users['name'] ?></td>
-            <td><?= $users['email'] ?></td>
-            <td><?= $users['password'] ?></td>
+            <td><?= $auths['id'] ?></td>
+            <td><?= $auths['name'] ?></td>
+            <td><?= $auths['email'] ?></td>
+            <td><?= $auths['password'] ?></td>
             <td>
-                <a href="/users/<?= $users['id'] ?>" class="btn btn-info btn-sm">View</a>
-                <a href="/users/edit/<?= $users['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                <a href="/users/delete/<?= $users['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                <a href="/auth/edit/<?= $auths['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/auth/delete/<?= $auths['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
         <?php endforeach; ?>
