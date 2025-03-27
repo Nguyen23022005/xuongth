@@ -1,0 +1,16 @@
+{
+    "vnp_Amount": "200000000",
+    "vnp_BankCode": "NCB",
+    "vnp_BankTranNo": "VNP14873069",
+    "vnp_CardType": "ATM",
+    "vnp_OrderInfo": "Thanh to\u00e1n \u0111\u01a1n h\u00e0ng #1",
+    "vnp_PayDate": "20250327141804",
+    "vnp_ResponseCode": "00",
+    "vnp_TmnCode": "HEDQ3E2I",
+    "vnp_TransactionNo": "14873069",
+    "vnp_TransactionStatus": "00",
+    "vnp_TxnRef": "1743059860",
+    "vnp_SecureHash": "b3ffb93443dbaeb7cea08f9cd7df203660bfca2936aab82315c3208d4e1a651b64da13fa264b69eebcdcb6df5896391dd9d8edca9bac097ad340a7c0c56efbca"
+}
+ORDER_ID: 1743059860 - STATUS: 00
+[][]
