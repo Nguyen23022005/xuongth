@@ -20,6 +20,7 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease-in-out;
+        text-decoration: none;
     }
     .btn_2:hover{
         background-color: white;
@@ -102,7 +103,7 @@
           </a>
           <div class="card-body">
             <h5 class="card-title">
-              <a href="/subjects/<?= $subject['id'] ?>" class="text-dark fw-bold"> <?= htmlspecialchars($subject['name']); ?> </a>
+              <a href="/subjects/<?= $subject['id'] ?>" class="text-dark fw-bold" style="text-decoration: none;"> <?= htmlspecialchars($subject['name']); ?> </a>
             </h5>
             <p class="card-text text-muted"> <?= htmlspecialchars($subject['description'] ?? 'Không có mô tả.'); ?> </p>
             <div class="d-flex justify-content-between align-items-center">

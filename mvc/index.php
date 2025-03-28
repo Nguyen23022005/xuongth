@@ -8,6 +8,7 @@ require_once "controller/LessonController.php";
 require_once "controller/CartController.php";
 require_once "controller/DiscountController.php";
 require_once "controller/TestController.php";
+require_once "controller/UserController.php";
 
 
 
@@ -23,6 +24,8 @@ $lessonController = new LessonController();
 $cartController = new CartController();
 $discountController = new DiscountController();
 $testController = new TestController();
+$userController = new UserController();
+
 
 $router->addRoute("/admin", function () {
     renderAdminView("view/layouts/dashboard.php", [], "Admin Dashboard");
@@ -41,6 +44,9 @@ $router->addRoute("/auth/profile", [$authController, "profile"]);
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
+
+$router->addRoute("/profile", [$userController, "index"]);
+$router->addRoute("/profile/edit/{id}", [$userController, "edit"]);
 
 // $router->addRoute("/auth", [$userController, "index"],  ['isAdmin']);
 // $router->addRoute("/auths/create", [$userController, "create"], ['isAdmin']);

@@ -27,6 +27,9 @@
 
   <!-- Main CSS File -->
   <link href="/public/assets/css/main.css" rel="stylesheet">
+  <!--  -->
+  <link href="/public/css/styles.css" rel="stylesheet" />
+
 
   <!-- =======================================================
   * Template Name: Mentor
@@ -48,22 +51,24 @@
       </a>
 
       <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="/" class="active" style="text-decoration: none;">Trang Chủ<br></a></li>
-          <li><a href="/" style="text-decoration: none;">About</a></li>
-          <li><a href="/" style="text-decoration: none;">Khóa Học</a></li>
-          <li><a href="/" style="text-decoration: none;">Trainers</a></li>
-          <li><a href="/" style="text-decoration: none;">Events</a></li>
-          <li><a href="/" style="text-decoration: none;">Pricing</a></li>
+        <ul class="navbar">
+          <li><a href="/" style="text-decoration: none;">Trang Chủ<br></a></li>
+          <li><a href="/profile" style="text-decoration: none;">About</a></li>
+          <li><a href="#" style="text-decoration: none;">Khóa Học</a></li>
+          <li><a href="#" style="text-decoration: none;">Trainers</a></li>
+          <li><a href="#" style="text-decoration: none;">Events</a></li>
+          <li><a href="#" style="text-decoration: none;">Pricing</a></li>
           <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user"></i> Tài khoản
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/profile">Thông tin</a></li>
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <li><a class="dropdown-item" href="/profile/edit/<?= $_SESSION['user']['id']?>">Thông tin</a></li>
+                            <?php endif; ?>
                             <li><a class="dropdown-item" href="/orders">Đơn hàng</a></li>
                             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-                                <li><a class="dropdown-item" href="/admin">Trang Quản Trị</a></li>
+                                <li><a class="dropdown-item" href="/subjects">Trang Quản Trị</a></li>
                             <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
                             <?php if (isset($_SESSION['user'])): ?>
@@ -170,7 +175,19 @@
   <!-- Main JS File -->
   <script src="/public/assets/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/public/js/scripts.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const currentUrl = window.location.pathname;
+    const navLinks = document.querySelectorAll(".navbar a");
 
+    navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentUrl) {
+            link.classList.add("active");
+        }
+    });
+});
+  </script>
 
 </body>
 

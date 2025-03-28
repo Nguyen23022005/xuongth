@@ -3,7 +3,7 @@
         'name' => 'nguyen/mvc',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '16332e7cac5a195ee5ef9ff55069b63f67c0b796',
+        'reference' => '40209d969671120eba9afab0f759ae70eab736d6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'nguyen/mvc' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '16332e7cac5a195ee5ef9ff55069b63f67c0b796',
+            'reference' => '40209d969671120eba9afab0f759ae70eab736d6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

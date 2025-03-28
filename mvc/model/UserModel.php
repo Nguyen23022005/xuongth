@@ -11,7 +11,7 @@ class UserModel {
 
     public function register($name, $email, $password) {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $query = "INSERT INTO userss (name, email, password) VALUES (:name, :email, :password)";
+        $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
@@ -20,7 +20,7 @@ class UserModel {
     }
 
     public function login($email, $password) {
-        $query = "SELECT * FROM userss WHERE email = :email";
+        $query = "SELECT * FROM users WHERE email = :email";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
@@ -34,21 +34,21 @@ class UserModel {
     }
 
     public function getAllUser() {
-        $query = "SELECT * FROM userss";
+        $query = "SELECT * FROM users";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getUserById($id) {
-        $query = "SELECT * FROM userss WHERE id = :id";
+        $query = "SELECT * FROM users WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     public function getUserById1($id) {
-        $query = "SELECT * FROM userss WHERE id = :id";
+        $query = "SELECT * FROM users WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -56,7 +56,7 @@ class UserModel {
     }
 
     public function createUser($name, $email, $password) {
-        $query = "INSERT INTO userss (name, email, password) VALUES (:name, :email, :password)";
+        $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
@@ -64,18 +64,19 @@ class UserModel {
         return $stmt->execute();
     }
 
-    public function updateUser($id, $name, $email, $password) {
-        $query = "UPDATE userss SET name = :name, email = :email, password = :password WHERE id = :id";
+    public function updateUser($id, $name, $email, $image, $phone ) {
+        $query = "UPDATE users SET name = :name, email = :email, image = :image, phone = :phone WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':image', $image);
+        $stmt->bindParam(':phone', $phone);
         return $stmt->execute();
     }
 
     public function deleteUser($id) {
-        $query = "DELETE FROM userss WHERE id = :id";
+        $query = "DELETE FROM users WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         return $stmt->execute();

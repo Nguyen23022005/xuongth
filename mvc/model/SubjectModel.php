@@ -67,6 +67,7 @@ class SubjectsModel
     }
 
     public function getSubjectById($id)
+
     {
         $query = "SELECT * FROM subjects WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -75,11 +76,12 @@ class SubjectsModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createSubject($category_id, $name, $image, $price, $sku, $status, $description)
+    public function createSubject($category_id, $user_id, $name, $image, $price, $sku, $status, $description)
     {
-        $query = "INSERT INTO subjects (category_id, name, image, price, sku, status, description) VALUES (:category_id, :name, :image, :price, :sku, :status, :description)";
+        $query = "INSERT INTO subjects (category_id, user_id , name, image, price, sku, status, description) VALUES (:category_id, :user_id, :name, :image, :price, :sku, :status, :description)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':category_id', $category_id);
+        $stmt->bindParam(':user_id', $user_id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':image', $image);
         $stmt->bindParam(':price', $price);

@@ -34,7 +34,13 @@ class TestController
     {
         $lessons = $this->lessonModel->getLessonById($id);
         $tests = $this->testModel->getAlltests();
+        renderAdminView("view/tests/list.php", compact('lessons','tests'), "subjects List", true);
+    }
+    public function tests_create($id){
+        $lessons = $this->lessonModel->getLessonById($id);
+        $tests = $this->testModel->getAlltests();
         renderAdminView("view/tests/create.php", compact('lessons','tests'), "subjects List", true);
+
     }
     public function questions_index($id)
     {

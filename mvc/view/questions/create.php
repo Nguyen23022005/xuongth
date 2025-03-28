@@ -3,8 +3,7 @@
     <div class="col-md-6">
         <form action="/questions/create" method="POST">
             <div class="mb-3">
-                <label for="tests_id" class="form-label">tests_id</label>
-                <input type="text" class="form-control" id="tests_id" name="tests_id" value="<?= $tests['id'] ?? '' ?>">
+                <input type="hidden" class="form-control" id="tests_id" name="tests_id" value="<?= $tests['id'] ?? '' ?>">
                 <?php if (isset($errors['tests_id'])): ?>
                     <span class="text-danger"><?= $errors['tests_id'] ?></span>
                 <?php endif; ?>
@@ -68,7 +67,7 @@
                     <h5 class="card-title text-center">Bài Kiểm Tra Trắc Nghiệm</h5>
                     <form id="quiz-form">
                         <div id="questions-container">
-                            <?php foreach ($questions as $index => $question): ?>
+                            <?php foreach ($questions as $index => $question): if($tests['id']== $question['tests_id']){ ?>
                                 <div class="mb-3">
                                     <p class="fw-bold"><?= htmlspecialchars($index + 1 . '. ' . $question['questions_text']) ?></p>
                                     <?php foreach (['a', 'b', 'c', 'd'] as $option): ?>
@@ -86,7 +85,7 @@
                                         </button>
                                     </form>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php }endforeach; ?>
                         </div>
                         <button type="button" class="btn btn-success w-100" onclick="checkAnswers()">Kiểm tra kết quả</button>
                     </form>

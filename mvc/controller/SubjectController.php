@@ -81,6 +81,7 @@ class SubjectController
 
             // Lấy dữ liệu từ form
             $category_id = $_POST['category_id'] ?? '';
+            $user_id = $_SESSION['user']['id'];
             $name = $_POST['name'] ?? '';
             $image = $_POST['image'] ?? '';
             $price = $_POST['price'] ?? 0;
@@ -108,7 +109,7 @@ class SubjectController
 
             // Nếu không có lỗi, thêm môn học
             if ($validate->passed()) {
-                $this->subjectsModel->createSubject($category_id, $name, $image, $price, $sku, $status, $description);
+                $this->subjectsModel->createSubject($category_id, $user_id, $name, $image, $price, $sku, $status, $description);
                 $_SESSION['success_message'] = "Subject created successfully!";
                 header("Location: /subjects");
                 exit;
