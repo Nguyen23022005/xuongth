@@ -3,18 +3,24 @@ require_once "model/CartModel.php";
 require_once "model/SubjectModel.php";
 require_once 'model/AuthModel.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php'; // Load PHPMailer
+
 class CartController
 {
     private $cartModel;
     private $subjectModel;
+    private $authModel;
 
     public function __construct()
     {
         $this->cartModel = new CartModel();
         $this->subjectModel = new SubjectsModel();
+        $this->authModel = new AuthModel();
     }
 
-    // Hiển thị giỏ hàng
     public function index()
     {
         $user_id = $_SESSION['user']['id'] ?? null;
@@ -42,7 +48,6 @@ class CartController
         // Hiển thị thông tin môn học (có thể dùng view)
         renderView("view/Cart/checkout.php", compact('subject'), "Edit Subject");
     }
-
     public function checkoutCreate()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -50,7 +55,7 @@ class CartController
             $validate = new Validate();
 
             $subject_id   = $_POST['subject_id'] ?? null;
-            $user_id      = isset($_SESSION['user']['id']) ? (int)$_SESSION['user']['id'] : null;
+            $user_id      = $_SESSION['user']['id'] ?? null;
             $categories_id = $_POST['categories_id'] ?? null;
             $name         = $_POST['name'] ?? '';
             $image        = $_POST['image'] ?? '';
@@ -60,12 +65,10 @@ class CartController
             $status       = 'Đã Tham Gia';
             $pttt         = $_POST['pttt'] ?? 'cod';
 
-            // Kiểm tra đầu vào
             $validate->checkRequired('subject_id', $subject_id, "Vui lòng chọn khóa học.");
             $validate->checkRequired('final_price', $price, "Giá không hợp lệ.");
 
             if ($validate->passed()) {
-                // Lưu đơn hàng vào database
                 $order_id = $this->cartModel->createUserSubject(
                     $subject_id,
                     $user_id,
@@ -81,7 +84,10 @@ class CartController
 
                 $_SESSION['success_message'] = "Đơn hàng đã được tạo thành công!";
 
-                // Xử lý thanh toán
+                // Gửi email xác nhận đơn hàng
+                $this->sendOrderEmail($user_id, $order_id, $name, $price);
+
+                // Xử lý thanh toán theo phương thức
                 switch ($pttt) {
                     case 'vnpay':
                         $this->processVNPay($order_id, $price);
@@ -99,7 +105,6 @@ class CartController
                         exit();
                 }
             } else {
-                // Nếu có lỗi, hiển thị lại form
                 $errors = $validate->getErrors();
                 renderView("view/Cart/checkout.php", compact('errors'), "Thanh toán");
             }
@@ -108,7 +113,45 @@ class CartController
         }
     }
 
-    // Xử lý thanh toán VNPAY
+    private function sendOrderEmail($user_id, $order_id, $subject_name, $total_price)
+    {
+        $user = (new AuthModel())->getAuthById($user_id);
+        if (!$user || empty($user['email'])) {
+            return;
+        }
+
+        $mail = new PHPMailer(true);
+        try {
+            // Cấu hình SMTP
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'baotrinhvan54@gmail.com'; // Thay bằng email của bạn
+            $mail->Password   = 'gwqnmcsoghpxxlwn'; // Thay bằng mật khẩu ứng dụng
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            // Thông tin người gửi và người nhận
+            $mail->setFrom('baotrinhvan54@gmail.com', 'E-Learning System');
+            $mail->addAddress($user['email'], $user['name']);
+
+            // Nội dung email
+            $mail->isHTML(true);
+            $mail->Subject = "Congratulations! You have successfully completed the course.";
+            $mail->Body    = "
+            <h3>Chào {$user['name']},</h3>
+            <p>Bạn đã đăng ký khóa học <strong>$subject_name</strong> thành công!</p>
+            <p>Chúng tôi hy vọng bạn sẽ có trải nghiệm học tập tuyệt vời.</p>
+            <p>Trân trọng,<br>Hệ thống đào tạo</p>
+            ";
+
+            // Gửi email
+            $mail->send();
+        } catch (Exception $e) {
+            error_log("Không thể gửi email: " . $mail->ErrorInfo);
+        }
+    }
+
     private function processVNPay($order_id, $amount)
     {
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";

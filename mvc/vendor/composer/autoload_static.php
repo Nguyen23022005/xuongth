@@ -22,6 +22,7 @@ class ComposerStaticInit77e1ebfb20008204dddb023ed8120762
         'P' => 
         array (
             'PhpOption\\' => 10,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'N' => 
         array (
@@ -53,6 +54,10 @@ class ComposerStaticInit77e1ebfb20008204dddb023ed8120762
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Nguyen\\Mvc\\' => 
         array (
