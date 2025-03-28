@@ -67,6 +67,7 @@
                             <li><a class="dropdown-item" href="/profile/edit/<?= $_SESSION['user']['id']?>">Thông tin</a></li>
                             <?php endif; ?>
                             <li><a class="dropdown-item" href="/orders">Đơn hàng</a></li>
+                            <li><a class="dropdown-item" href="/Course">Các khoá học đã đăng ký</a></li>
                             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                                 <li><a class="dropdown-item" href="/subjects">Trang Quản Trị</a></li>
                             <?php endif; ?>

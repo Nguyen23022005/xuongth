@@ -122,4 +122,13 @@ class SubjectsModel
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+    public function getSubjectsByUser($user_id)
+    {
+        $query = "SELECT s.* FROM user_subjects s JOIN user_subjects e ON s.id =
+        e.subject_id WHERE e.user_id = :user_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -162,4 +162,21 @@ class SubjectController
         header("Location: /subjects");
         exit;
     }
+     //hiển thị khoá học đã tham gia
+     public function showCourse() {
+        // Lấy user_id từ session
+        $user_id = $_SESSION['user']['id'] ?? null;
+        
+        // Nếu chưa đăng nhập, chuyển hướng về trang đăng nhập
+        if (!$user_id) {
+            header("Location: /login");
+            exit();
+        }
+
+        // Lấy danh sách khóa học theo user_id
+        $courses = $this->subjectsModel->getSubjectsByUser($user_id);
+
+        // Hiển thị view với danh sách khóa học
+        renderView("view/user_subject/list.php", compact('courses'), "Course List");
+    }
 }

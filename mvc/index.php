@@ -69,6 +69,7 @@ $router->addRoute("/subjects/edit/{id}", [$subjectsController, "edit"], ['isAdmi
 $router->addRoute("/subjects/delete/{id}", [$subjectsController, "delete"], ['isAdmin']);
 $router->addRoute("/subjects/detail/{id}", [$subjectsController, "admin_index"]);
 $router->addRoute("/subjects/quiz/{id}", [$subjectsController, "quiz_index"]);
+$router->addRoute("/Course" , [$subjectsController, "showCourse"]);
 $router->addRoute("/", [$subjectsController, "shows"]);
 
 $router->addRoute("/subjects_getall", [$subjectsController, "showAllByCategory"]);
