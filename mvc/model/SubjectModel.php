@@ -124,8 +124,10 @@ class SubjectsModel
     }
     public function getSubjectsByUser($user_id)
     {
-        $query = "SELECT s.* FROM user_subjects s JOIN user_subjects e ON s.id =
-        e.subject_id WHERE e.user_id = :user_id";
+        $query = "SELECT s.* 
+                  FROM subjects s 
+                  JOIN user_subjects us ON s.id = us.subject_id 
+                  WHERE us.user_id = :user_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':user_id', $user_id);
         $stmt->execute();

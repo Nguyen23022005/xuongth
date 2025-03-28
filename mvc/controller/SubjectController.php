@@ -162,8 +162,8 @@ class SubjectController
         header("Location: /subjects");
         exit;
     }
-     //hiển thị khoá học đã tham gia
-     public function showCourse() {
+      //hiển thị khoá học đã tham gia
+      public function showCourse() {
         // Lấy user_id từ session
         $user_id = $_SESSION['user']['id'] ?? null;
         
