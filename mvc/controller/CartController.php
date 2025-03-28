@@ -127,7 +127,7 @@ class CartController
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'baotrinhvan54@gmail.com'; // Thay bằng email của bạn
-            $mail->Password   = 'gwqnmcsoghpxxlwn'; // Thay bằng mật khẩu ứng dụng
+            $mail->Password   = ''; // Thay bằng mật khẩu ứng dụng
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
