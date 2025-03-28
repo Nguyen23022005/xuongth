@@ -101,7 +101,7 @@ class CartController
                     case 'cod':
                     default:
                         $_SESSION['success_message'] = "Đơn hàng đã được đặt thành công! Thanh toán khi nhận hàng.";
-                        header("Location: /order-success?order_id=$order_id");
+                        renderView("view/Cart/camon.php");
                         exit();
                 }
             } else {

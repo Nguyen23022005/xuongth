@@ -106,6 +106,11 @@
               <a href="/subjects/<?= $subject['id'] ?>" class="text-dark fw-bold" style="text-decoration: none;"> <?= htmlspecialchars($subject['name']); ?> </a>
             </h5>
             <p class="card-text text-muted"> <?= htmlspecialchars($subject['description'] ?? 'Không có mô tả.'); ?> </p>
+            <div class="trainer-rank d-flex align-items-center" style=" font-weight: bold;color: #5FCF80;">
+                    <i class="bi bi-person user-icon"></i>&nbsp;35
+                    &nbsp;&nbsp;
+                  </div>
+                  <br>
             <div class="d-flex justify-content-between align-items-center">
               <a href="/carts/checkout/<?= $subject['id'] ?>" class="btn_2">Tham Gia Khóa Học</a>
               <span class="text-secondary fw-bold"> <?= number_format($subject['price'], 0); ?> VND</span>
