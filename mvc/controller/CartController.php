@@ -126,13 +126,13 @@ class CartController
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'baotrinhvan54@gmail.com'; // Thay bằng email của bạn
-            $mail->Password   = ''; // Thay bằng mật khẩu ứng dụng
+            $mail->Username   = 'ebanythanh1@gmail.com'; // Thay bằng email của bạn
+            $mail->Password   = 'frfwivokncfsmqci'; // Thay bằng mật khẩu ứng dụng
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
             // Thông tin người gửi và người nhận
-            $mail->setFrom('baotrinhvan54@gmail.com', 'E-Learning System');
+            $mail->setFrom('ebanythanh1@gmail.com', 'E-Learning System');
             $mail->addAddress($user['email'], $user['name']);
 
             // Nội dung email

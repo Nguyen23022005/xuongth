@@ -106,6 +106,15 @@ class SubjectsModel
         return $stmt->execute();
     }
 
+    public function updateUserSubject($id, $user_quantity)
+    {
+        $query = "UPDATE subjects SET user_quantity = :user_quantity WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':user_quantity', $user_quantity);
+        return $stmt->execute();
+    }
+
     public function deleteSubject($id)
     {
         $query = "DELETE FROM subjects WHERE id = :id";

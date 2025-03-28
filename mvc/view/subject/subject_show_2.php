@@ -107,7 +107,7 @@
             </h5>
             <p class="card-text text-muted"> <?= htmlspecialchars($subject['description'] ?? 'Không có mô tả.'); ?> </p>
             <div class="trainer-rank d-flex align-items-center" style=" font-weight: bold;color: #5FCF80;">
-                    <i class="bi bi-person user-icon"></i>&nbsp;35
+                    <i class="bi bi-person user-icon"></i>&nbsp;<?= $subject['user_quantity'] ?>
                     &nbsp;&nbsp;
                   </div>
                   <br>

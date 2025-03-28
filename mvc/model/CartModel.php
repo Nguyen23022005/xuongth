@@ -97,9 +97,32 @@ class CartModel
         return $stmt->execute();
     }
 
+    // public function createUserSubject($subject_id, $user_id, $categories_id, $name, $image, $price, $sku, $description, $status, $pttt)
+    // {
+    //     $query = "INSERT INTO user_subjects (subject_id, user_id, categories_id, name, image, price, sku, description, status, pttt) VALUES (:subject_id, :user_id, :categories_id, :name, :image, :price, :sku, :description, :status, :pttt)";
+    //     $stmt = $this->conn->prepare($query);
+    //     $stmt->bindParam(':subject_id', $subject_id);
+    //     $stmt->bindParam(':user_id', $user_id, $user_id ? PDO::PARAM_INT : PDO::PARAM_NULL);
+    //     $stmt->bindParam(':categories_id', $categories_id);
+    //     $stmt->bindParam(':name', $name);
+    //     $stmt->bindParam(':image', $image);
+    //     $stmt->bindParam(':price', $price);
+    //     $stmt->bindParam(':sku', $sku);
+    //     $stmt->bindParam(':description', $description);
+    //     $stmt->bindParam(':status', $status);
+    //     $stmt->bindParam(':pttt', $pttt);
+    //     return $stmt->execute();
+    // }
+
     public function createUserSubject($subject_id, $user_id, $categories_id, $name, $image, $price, $sku, $description, $status, $pttt)
-    {
-        $query = "INSERT INTO user_subjects (subject_id, user_id, categories_id, name, image, price, sku, description, status, pttt) VALUES (:subject_id, :user_id, :categories_id, :name, :image, :price, :sku, :description, :status, :pttt)";
+{
+    try {
+        // Bắt đầu transaction
+        $this->conn->beginTransaction();
+
+        // Thêm dữ liệu vào bảng user_subjects
+        $query = "INSERT INTO user_subjects (subject_id, user_id, categories_id, name, image, price, sku, description, status, pttt) 
+                  VALUES (:subject_id, :user_id, :categories_id, :name, :image, :price, :sku, :description, :status, :pttt)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':subject_id', $subject_id);
         $stmt->bindParam(':user_id', $user_id, $user_id ? PDO::PARAM_INT : PDO::PARAM_NULL);
@@ -111,7 +134,26 @@ class CartModel
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':pttt', $pttt);
-        return $stmt->execute();
+        $stmt->execute();
+
+        // Cập nhật user_quantity trong bảng subjects
+        $updateQuery = "UPDATE subjects 
+                        SET user_quantity = COALESCE(user_quantity, 0) + 1 
+                        WHERE id = :subject_id";
+        $updateStmt = $this->conn->prepare($updateQuery);
+        $updateStmt->bindParam(':subject_id', $subject_id);
+        $updateStmt->execute();
+
+        // Commit transaction
+        $this->conn->commit();
+
+        return true;
+    } catch (Exception $e) {
+        // Rollback nếu có lỗi
+        $this->conn->rollBack();
+        return false;
     }
+}
+
 }
 ?>
