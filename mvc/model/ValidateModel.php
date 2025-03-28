@@ -32,6 +32,11 @@ class Validate
         }
     }
 
+    // Thêm phương thức addError
+    public function addError($field, $message)
+    {
+        $this->errors[$field] = $message;
+    }
 
     public function getErrors()
     {

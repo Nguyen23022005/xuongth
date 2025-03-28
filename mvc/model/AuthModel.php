@@ -66,10 +66,7 @@ class AuthModel
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        var_dump($user);
-
         if ($user && password_verify($password, $user['password'])) {
-            var_dump($user);
             return $user;
         }
 
@@ -81,12 +78,25 @@ class AuthModel
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $query = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
         $stmt = $this->conn->prepare($query);
-
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashedPassword);
         $stmt->bindParam(':role', $role);
-
         return $stmt->execute();
+    }
+
+    public function checkEmailExists($email, $excludeId = null)
+    {
+        $query = "SELECT COUNT(*) FROM users WHERE email = :email";
+        if ($excludeId !== null) {
+            $query .= " AND id != :id";
+        }
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':email', $email);
+        if ($excludeId !== null) {
+            $stmt->bindParam(':id', $excludeId);
+        }
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
     }
 }

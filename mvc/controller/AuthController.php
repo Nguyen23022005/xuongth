@@ -31,6 +31,10 @@ class AuthController
             $validate->checkEmail('email', $email, "Email không hợp lệ.");
             $validate->checkRequired('password', $password, "Mật khẩu không được để trống.");
 
+            if ($this->authModel->checkEmailExists($email)) {
+                $validate->addError('email', "Email đã tồn tại trong hệ thống.");
+            }
+
             if ($validate->passed()) {
                 if ($this->authModel->createAuth($name, $email, $password)) {
                     $_SESSION['success_message'] = "Tạo tài khoản thành công!";
@@ -59,18 +63,42 @@ class AuthController
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once "model/ValidateModel.php";
+            $validate = new Validate();
+
             $name = trim($_POST['name']);
             $email = trim($_POST['email']);
             $password = $_POST['password'];
 
-            if (!empty($password)) {
-                $password = password_hash($password, PASSWORD_BCRYPT);
-            } else {
-                $password = $auth['password'];
-            }
-        }
+            $validate->checkRequired('name', $name, "Tên không được để trống.");
+            $validate->checkEmail('email', $email, "Email không hợp lệ.");
 
-        renderAdminView("view/auth/edit.php", compact('auth'), "Chỉnh sửa tài khoản");
+            if ($this->authModel->checkEmailExists($email, $id)) {
+                $validate->addError('email', "Email đã tồn tại trong hệ thống.");
+            }
+
+            if ($validate->passed()) {
+                if (!empty($password)) {
+                    $password = password_hash($password, PASSWORD_BCRYPT);
+                } else {
+                    $password = $auth['password'];
+                }
+
+                if ($this->authModel->updateAuth($id, $name, $email, $password)) {
+                    $_SESSION['success_message'] = "Cập nhật tài khoản thành công!";
+                    header("Location: /auth");
+                    exit;
+                } else {
+                    $errors = ["general" => "Có lỗi xảy ra khi cập nhật tài khoản."];
+                }
+            } else {
+                $errors = $validate->getErrors();
+            }
+
+            renderAdminView("view/auth/edit.php", compact('auth', 'errors'), "Chỉnh sửa tài khoản");
+        } else {
+            renderAdminView("view/auth/edit.php", compact('auth'), "Chỉnh sửa tài khoản");
+        }
     }
 
     public function delete($id)
@@ -101,13 +129,17 @@ class AuthController
             $validate->checkEmail('email', $email, "Email không hợp lệ.");
             $validate->checkRequired('password', $password, "Mật khẩu không được để trống.");
 
+            if ($this->authModel->checkEmailExists($email)) {
+                $validate->addError('email', "Email đã tồn tại trong hệ thống.");
+            }
+
             if ($validate->passed()) {
                 if ($this->authModel->register($name, $email, $password, $role)) {
                     $_SESSION['success_message'] = "Đăng ký thành công! Vui lòng đăng nhập.";
                     header("Location: /login");
                     exit;
                 } else {
-                    $errors = ["general" => "Đăng ký thất bại, email có thể đã tồn tại."];
+                    $errors = ["general" => "Đăng ký thất bại."];
                 }
             } else {
                 $errors = $validate->getErrors();
