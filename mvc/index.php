@@ -69,8 +69,16 @@ $router->addRoute("/subjects/edit/{id}", [$subjectsController, "edit"], ['isAdmi
 $router->addRoute("/subjects/delete/{id}", [$subjectsController, "delete"], ['isAdmin']);
 $router->addRoute("/subjects/detail/{id}", [$subjectsController, "admin_index"]);
 $router->addRoute("/subjects/quiz/{id}", [$subjectsController, "quiz_index"]);
-$router->addRoute("/Course" , [$subjectsController, "showCourse"]);
+$router->addRoute("/course" , [$subjectsController, "showCourse"]);
 $router->addRoute("/", [$subjectsController, "shows"]);
+$router->addRoute("/create/sendemail", [$subjectsController, "subject_email"]);
+$router->addRoute("/subjects/email/{id}", [$subjectsController, "show_email"]);
+
+
+// 
+$router->addRoute("/subjects/register/{id}", [$subjectsController, "show_register"]);
+
+
 
 $router->addRoute("/subjects_getall", [$subjectsController, "showAllByCategory"]);
 
@@ -107,6 +115,7 @@ $router->addRoute("/questions/create", [$testController, "questions_create"]);
 $router->addRoute("/questions/setup/{id}", [$testController, "questions_index"]);
 $router->addRoute("/questions/delete/{id}", [$testController, "deletequestions"]);
 $router->addRoute("/tests/results", [$testController, "results"]);
+
 
 $router->dispatch();
 ?>

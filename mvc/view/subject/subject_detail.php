@@ -1,6 +1,52 @@
+<style>
+    .progress-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        margin-top: 20px;
+    }
+
+    .progress-label {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .progress {
+        height: 10px;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #e9ecef;
+    }
+
+    .progress-bar-custom {
+        background-color: #5FCF80;
+        transition: width 0.6s ease;
+    }
+
+    .btn-certificate {
+        background-color: #5FCF80;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s ease-in-out;
+        margin-top: 15px;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .btn-certificate:hover {
+        background-color: white;
+        color: #5FCF80;
+        border: 2px solid #5FCF80;
+    }
+</style>
 <div class="container mt-4">
     <h1 class="text-center mb-4"><?= htmlspecialchars($subject['name']) ?></h1>
-    
+
     <div class="row">
         <!-- Cột Video -->
         <div class="col-md-8">
@@ -15,9 +61,24 @@
         <!-- Cột Danh Sách Bài Học -->
         <div class="col-md-4">
             <?php if (!empty($lessons)): ?>
+                <div class="progress-container">
+                    <div class="progress-label">Tiến độ: <span>100%</span></div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-custom" style="width: 80%;"></div>
+                    </div>
+                    <form action="/create/sendemail" method="POST">
+                        <input type="hidden" name="name" value="<?= htmlspecialchars($subject['name']) ?>">
+                        <input type="hidden" name="image" value="<?= htmlspecialchars($subject['image']) ?>">
+                        <input type="hidden" name="sku" value="<?= htmlspecialchars($subject['sku']) ?>">
+
+                        <button type="submit" class="btn btn-certificate mt-3">
+                            Nhận Chứng Chỉ
+                        </button>
+                    </form>
+                </div>
                 <div class="card shadow">
                     <div class="card-body">
-                        <label class="form-label fw-bold">📚 Nội Dung Khóa Học:</label>
+                        <label class="form-label fw-bold"> Nội Dung Khóa Học:</label>
                         <ul class="list-group">
                             <?php foreach ($lessons as $index => $lesson): ?>
                                 <li class="list-group-item">
@@ -26,22 +87,23 @@
                                         <?= htmlspecialchars($lesson['title']) ?>
                                         <i class="toggle-icon fas fa-chevron-down"></i>
                                     </p>
-                                    
+
                                     <div class="video-link-container" style="display: <?= $index === 0 ? 'block' : 'none' ?>; padding-left: 15px;">
                                         <a href="javascript:void(0);" class="lesson-link text-primary fw-bold"
                                             data-id="<?= htmlspecialchars($lesson['id']) ?>"
-                                            data-video="<?= htmlspecialchars($lesson['video']) ?>" 
+                                            data-video="<?= htmlspecialchars($lesson['video']) ?>"
                                             style="text-decoration: none;">
-                                            ▶ Xem Video Bài Học
+                                            Xem Video Bài Học
                                         </a>
-                                        
+
                                         <?php foreach ($tests as $test): if ($test['lessons_id'] == $lesson['id']) { ?>
-                                            <div class="mt-1">
-                                                <a class="lesson-link text-success fw-bold" href="/subjects/quiz/<?= htmlspecialchars($test['id']) ?>" style="text-decoration: none;" >
-                                                    📝 Quiz: <?= htmlspecialchars($test['title']) ?>
-                                                </a>
-                                            </div>
-                                        <?php } endforeach; ?>
+                                                <div class="mt-1">
+                                                    <a class="lesson-link text-success fw-bold" href="/subjects/quiz/<?= htmlspecialchars($test['id']) ?>" style="text-decoration: none;">
+                                                        Quiz: <?= htmlspecialchars($test['title']) ?>
+                                                    </a>
+                                                </div>
+                                        <?php }
+                                        endforeach; ?>
                                     </div>
                                 </li>
                             <?php endforeach; ?>
