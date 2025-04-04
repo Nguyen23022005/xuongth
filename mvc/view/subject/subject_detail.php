@@ -1,7 +1,7 @@
-<!-- filepath: c:\xampp\htdocs\XuongThucHanh\xuongth\mvc\view\subject\subject_detail.php -->
 <div class="container mt-4">
     <!-- Tiêu đề môn học -->
     <h1 class="text-center mb-4"><?= htmlspecialchars($subject['name']) ?></h1>
+
     <div class="row">
         <!-- Cột Video -->
         <div class="col-md-8">
@@ -62,8 +62,7 @@
                                     id="content"
                                     class="form-control"
                                     rows="5"
-                                    required>
-                                </textarea>
+                                    required></textarea>
                             </div>
                             <button type="submit" class="btn btn-success">Gửi</button>
                         </form>
@@ -77,9 +76,24 @@
         <!-- Cột Danh Sách Bài Học -->
         <div class="col-md-4">
             <?php if (!empty($lessons)): ?>
+                <div class="progress-container">
+                    <div class="progress-label">Tiến độ: <span>100%</span></div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-custom" style="width: 80%;"></div>
+                    </div>
+                    <form action="/create/sendemail" method="POST">
+                        <input type="hidden" name="name" value="<?= htmlspecialchars($subject['name']) ?>">
+                        <input type="hidden" name="image" value="<?= htmlspecialchars($subject['image']) ?>">
+                        <input type="hidden" name="sku" value="<?= htmlspecialchars($subject['sku']) ?>">
+
+                        <button type="submit" class="btn btn-certificate mt-3">
+                            Nhận Chứng Chỉ
+                        </button>
+                    </form>
+                </div>
                 <div class="card shadow">
                     <div class="card-body">
-                        <label class="form-label fw-bold">📚 Nội Dung Khóa Học:</label>
+                        <label class="form-label fw-bold"> Nội Dung Khóa Học:</label>
                         <ul class="list-group">
                             <?php foreach ($lessons as $index => $lesson): ?>
                                 <li class="list-group-item">
@@ -90,17 +104,23 @@
                                         <?= htmlspecialchars($lesson['title']) ?>
                                         <i class="toggle-icon fas fa-chevron-down"></i>
                                     </p>
-                                    <div
-                                        class="video-link-container"
-                                        style="display: <?= $index === 0 ? 'block' : 'none' ?>; padding-left: 15px;">
-                                        <a
-                                            href="javascript:void(0);"
-                                            class="lesson-link text-primary fw-bold"
+
+                                    <div class="video-link-container" style="display: <?= $index === 0 ? 'block' : 'none' ?>; padding-left: 15px;">
+                                        <a href="javascript:void(0);" class="lesson-link text-primary fw-bold"
                                             data-id="<?= htmlspecialchars($lesson['id']) ?>"
                                             data-video="<?= htmlspecialchars($lesson['video']) ?>"
                                             style="text-decoration: none;">
-                                            ▶ Xem Video Bài Học
+                                            Xem Video Bài Học
                                         </a>
+
+                                        <?php foreach ($tests as $test): if ($test['lessons_id'] == $lesson['id']) { ?>
+                                                <div class="mt-1">
+                                                    <a class="lesson-link text-success fw-bold" href="/subjects/quiz/<?= htmlspecialchars($test['id']) ?>" style="text-decoration: none;">
+                                                        📝 Quiz: <?= htmlspecialchars($test['title']) ?>
+                                                    </a>
+                                                </div>
+                                        <?php }
+                                        endforeach; ?>
                                     </div>
                                 </li>
                             <?php endforeach; ?>
@@ -130,6 +150,11 @@
                     videoElement.attr("src", youtubeEmbedUrl).fadeIn();
                     noVideoMessage.hide();
                     window.history.pushState({}, "", "?lesson_id=" + lessonId);
+
+                    // Update the comment form's lesson_id input
+                    $("input[name='lesson_id']").val(lessonId);
+                    // Also update the form action if needed
+                    $("form[action^='/comments/create/']").attr("action", "/comments/create/" + lessonId);
                 } else {
                     videoElement.hide();
                     noVideoMessage.fadeIn();

@@ -23,6 +23,14 @@ class SubjectsModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAllUserSubjects()
+    {
+        $query = "SELECT * FROM user_subjects";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getPaginatedSubjects($limit, $offset) {
         $sql = "SELECT * FROM subjects LIMIT :limit OFFSET :offset";
         $stmt = $this->conn->prepare($sql);

@@ -53,8 +53,7 @@
       <nav id="navmenu" class="navmenu">
         <ul class="navbar">
           <li><a href="/" style="text-decoration: none;">Trang Chủ<br></a></li>
-          <li><a href="/profile" style="text-decoration: none;">About</a></li>
-          <li><a href="#" style="text-decoration: none;">Khóa Học</a></li>
+          <li><a href="/course" style="text-decoration: none;">Khóa Học Đã Tham Gia</a></li>
           <li><a href="#" style="text-decoration: none;">Trainers</a></li>
           <li><a href="#" style="text-decoration: none;">Events</a></li>
           <li><a href="#" style="text-decoration: none;">Pricing</a></li>
@@ -66,16 +65,14 @@
                         <?php if (isset($_SESSION['user'])): ?>
                             <li><a class="dropdown-item" href="/profile/edit/<?= $_SESSION['user']['id']?>">Thông tin</a></li>
                             <?php endif; ?>
-                            <li><a class="dropdown-item" href="/orders">Đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="/Course">Các khoá học đã đăng ký</a></li>
                             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                                 <li><a class="dropdown-item" href="/subjects">Trang Quản Trị</a></li>
                             <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
                             <?php if (isset($_SESSION['user'])): ?>
-                                <li><a class="dropdown-item text-danger" href="/logout">Đăng xuất<i class="fa-solid fa-right-to-bracket"></i></a></li>
+                                <li><a class="dropdown-item text-danger" href="/logout">Đăng xuất</a></li>
                             <?php else: ?>
-                                <li><a class="dropdown-item text-primary" href="/login"><i class="fa-solid fa-right-to-bracket"></i>Đăng nhập</a></li>
+                                <li><a class="dropdown-item text-primary" href="/login">Đăng nhập</a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
@@ -113,22 +110,22 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#" style="text-decoration: none;">Home</a></li>
+            <li><a href="#" style="text-decoration: none;">About us</a></li>
+            <li><a href="#" style="text-decoration: none;">Services</a></li>
+            <li><a href="#" style="text-decoration: none;">Terms of service</a></li>
+            <li><a href="#" style="text-decoration: none;">Privacy policy</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="#" style="text-decoration: none;">Web Design</a></li>
+            <li><a href="#" style="text-decoration: none;">Web Development</a></li>
+            <li><a href="#" style="text-decoration: none;">Product Management</a></li>
+            <li><a href="#" style="text-decoration: none;">Marketing</a></li>
+            <li><a href="#" style="text-decoration: none;">Graphic Design</a></li>
           </ul>
         </div>
 
