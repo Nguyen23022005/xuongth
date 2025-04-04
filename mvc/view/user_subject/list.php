@@ -41,6 +41,31 @@
         font-weight: bold;
         color: #5FCF80;
     }
+    .progress-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        margin-top: 20px;
+    }
+
+    .progress-label {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .progress {
+        height: 10px;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #e9ecef;
+    }
+
+    .progress-bar-custom {
+        background-color: #5FCF80;
+        transition: width 0.6s ease;
+    }
 </style>
 
 <body>
@@ -69,6 +94,10 @@
                                 <div class="trainer-rank d-flex align-items-center text-center" style=" font-weight: bold;color: #5FCF80;">
                                     <i class="bi bi-person user-icon "></i>&nbsp;<?= $course['user_quantity'] ?> Học Viên
                                     &nbsp;&nbsp;
+                                </div>
+                                <br>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-custom" style="width: 80%;"></div>
                                 </div>
                                 <br>
                             </div>
