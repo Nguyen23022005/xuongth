@@ -67,7 +67,6 @@ class SubjectsModel
     }
 
     public function getSubjectById($id)
-
     {
         $query = "SELECT * FROM subjects WHERE id = :id";
         $stmt = $this->conn->prepare($query);

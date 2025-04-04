@@ -36,18 +36,14 @@ class LessonsModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getLessonsBySubjectId($subject_id)
+    public function getLessonsBySubjectId($subjectId)
     {
-        $query = "SELECT id, title, video, status 
-                  FROM lessons 
-                  WHERE subject_id = :subjectId";
-        
+        $query = "SELECT * FROM lessons WHERE subject_id = :subject_id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':subjectId', $subject_id, PDO::PARAM_INT);
+        $stmt->bindParam(':subject_id', $subjectId);
         $stmt->execute();
-        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }    
+    } 
 
     // Thêm bài học mới
     public function createLesson($subject_id, $title, $video, $status)

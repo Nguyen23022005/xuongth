@@ -2,6 +2,7 @@
 require_once "model/SubjectModel.php";
 require_once "model/LessonModel.php";
 require_once "model/TestModel.php";
+require_once "model/CommentModel.php";  
 require_once "view/helpers.php";
 
 class SubjectController
@@ -9,12 +10,14 @@ class SubjectController
     private $subjectsModel;
     private $lessonModel;
     private $testModel;
+    private $commentModel;
 
     public function __construct()
     {
         $this->subjectsModel = new SubjectsModel();
         $this->lessonModel = new LessonsModel();
         $this->testModel = new TestModel();
+        $this->commentModel = new CommentModel();
     }
 
     public function index()
@@ -38,11 +41,28 @@ class SubjectController
 
     public function show($id)
     {
+        // Lấy thông tin môn học
         $subject = $this->subjectsModel->getSubjectById($id);
-        $lessons = $this->lessonModel->getLessonsBySubjectId($id); // Lấy tất cả bài học của subject_id
-        $tests = $this->testModel->getAlltests(); // Lấy tất cả bài kiểm tra của subject_id
-        $questions = $this->testModel->getAllQuestions(); // L
-        renderView("view/subject/subject_detail.php", compact('lessons', 'subject','tests','questions'), "Subject Detail");
+    
+        if (!$subject) {
+            $_SESSION['error_message'] = "Môn học không tồn tại.";
+            header("Location: /");
+            exit;
+        }
+    
+        // Lấy danh sách bài học của môn học
+        $lessons = $this->lessonModel->getLessonsBySubjectId($id);
+    
+        // Lấy danh sách bình luận của bài học đầu tiên (nếu có)
+        $comments = [];
+        $lessonId = null;
+        if (!empty($lessons)) {
+            $lessonId = $lessons[0]['id'];
+            $comments = $this->commentModel->getAllCommentsByLessonId($lessonId);
+        }
+    
+        // Render view subject_detail với thông tin môn học, bài học và bình luận
+        renderView("view/subject/subject_detail.php", compact('subject', 'lessons', 'comments', 'lessonId'), "Chi tiết môn học");
     }
 
     public function shows()
