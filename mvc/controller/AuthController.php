@@ -170,10 +170,7 @@ class AuthController
 
                 if ($user) {
                     $_SESSION['user'] = $user;
-<<<<<<< HEAD
                     $_SESSION['user_id'] = $user['id'];
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
                     header("Location: /");
                     exit;
                 } else {
@@ -195,25 +192,12 @@ class AuthController
         header("Location: /login");
         exit;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
     public function quenmatkhau()
     {
         renderView("view/auth/quenmatkhau.php", [], "Quên mật khẩu");
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
     public function thongbao()
     {
         renderView("view/thongbao.php", [], "Thông báo");
     }
-<<<<<<< HEAD
 }
-=======
-
-}
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e

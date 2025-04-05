@@ -125,7 +125,6 @@ class TestModel
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
-<<<<<<< HEAD
     
     public function getQuestionsForUser($test_id, $user_id)
     {
@@ -171,6 +170,4 @@ class TestModel
         $stmt->bindParam(':selected_option', $selected_option);
         return $stmt->execute();
     }
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 }

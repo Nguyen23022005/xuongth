@@ -45,22 +45,15 @@ $router->addRoute("/auth/delete/{id}", [$authController, "delete"], ['isAdmin'])
 $router->addRoute("/auth/forgotPW", [$authController, "forgotPassword"]);
 $router->addRoute("/auth/profile", [$authController, "profile"]);
 
-<<<<<<< HEAD
-$router->addRoute("/quenmatkhau", [$authController, "quenmatkhau"]);
-// $router->addRoute("/quenmatkhau/sendemail", [$authController, "sendEmail"]);
-$router->addRoute("/thongbao", [$authController, "thongbao"]);
-
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
-=======
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
 $router->addRoute("/quenmatkhau", [$authController, "quenmatkhau"]);
 // $router->addRoute("/quenmatkhau/sendemail", [$authController, "sendEmail"]);
 $router->addRoute("/thongbao", [$authController, "thongbao"]);
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 $router->addRoute("/profile", [$userController, "index"]);
 $router->addRoute("/profile/edit/{id}", [$userController, "edit"]);
@@ -86,11 +79,7 @@ $router->addRoute("/subjects/edit/{id}", [$subjectsController, "edit"], ['isAdmi
 $router->addRoute("/subjects/delete/{id}", [$subjectsController, "delete"], ['isAdmin']);
 $router->addRoute("/subjects/detail/{id}", [$subjectsController, "admin_index"]);
 $router->addRoute("/subjects/quiz/{id}", [$subjectsController, "quiz_index"]);
-<<<<<<< HEAD
 $router->addRoute("/Course", [$subjectsController, "showCourse"]);
-=======
-$router->addRoute("/Course" , [$subjectsController, "showCourse"]);
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 $router->addRoute("/", [$subjectsController, "shows"]);
 $router->addRoute("/create/sendemail", [$subjectsController, "subject_email"]);
 $router->addRoute("/subjects/email/{id}", [$subjectsController, "show_email"]);
@@ -128,10 +117,7 @@ $router->addRoute("/discounts/delete/{id}", [$discountController, "delete"]);
 $router->addRoute("/tests", [$testController, "index"]);
 $router->addRoute("/tests/setup/{id}", [$testController, "tests_index"]);
 $router->addRoute("/tests/create", [$testController, "create"]);
-<<<<<<< HEAD
 $router->addRoute("/submitQuiz/{test_id}", [$testController, "submitQuiz"]);
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 // 
 
@@ -142,10 +128,7 @@ $router->addRoute("/questions/delete/{id}", [$testController, "deletequestions"]
 $router->addRoute("/tests/results", [$testController, "results"]);
 
 // comment
-<<<<<<< HEAD
-=======
 
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 $router->addRoute("/comments/{lessonId}", [$commentController, "index"]);
 $router->addRoute("/comments/edit/{id}", [$commentController, "edit"]);
 $router->addRoute("/comments/delete/{id}", [$commentController, "delete"]);

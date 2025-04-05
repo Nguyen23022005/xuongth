@@ -36,7 +36,6 @@ class SubjectController
         $lessons = $this->lessonModel->getAllLessons();
         renderAdminView("view/subject/subject_detail_admin.php", compact('subjects', 'lessons'), "subjects List", true);
     }
-<<<<<<< HEAD
     
     public function quiz_index($id)
     {
@@ -56,13 +55,6 @@ class SubjectController
         $questions = $this->testModel->getQuestionsForUser($id, $user_id);  // Lọc câu hỏi cho người dùng
 
         renderView("view/subject/subject_quiz.php", compact('test', 'questions'), "Làm bài quiz");
-=======
-    public function quiz_index($id)
-    {
-        $tests = $this->testModel->getTestById($id);
-        $questions = $this->testModel->getAllquestions();
-        renderView("view/subject/subject_quiz.php", compact('tests', 'questions'), "subjects List", true);
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
     }
 
     public function show($id)

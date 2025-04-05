@@ -27,18 +27,13 @@ class TestController
     {
         $subjects = $this->subjectsModel->getSubjectById($id);
         $lessons = $this->lessonModel->getAllLessons();
-<<<<<<< HEAD
         renderAdminView("view/subject/subject_detail_admin.php", compact('subjects', 'lessons'), "subjects List", true);
-=======
-        renderAdminView("view/subject/subject_detail_admin.php", compact('subjects','lessons'), "subjects List", true);
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
     }
 
     public function tests_index($id)
     {
         $lessons = $this->lessonModel->getLessonById($id);
         $tests = $this->testModel->getAlltests();
-<<<<<<< HEAD
         renderAdminView("view/tests/list.php", compact('lessons', 'tests'), "subjects List", true);
     }
     public function tests_create($id)
@@ -46,25 +41,12 @@ class TestController
         $lessons = $this->lessonModel->getLessonById($id);
         $tests = $this->testModel->getAlltests();
         renderAdminView("view/tests/create.php", compact('lessons', 'tests'), "subjects List", true);
-=======
-        renderAdminView("view/tests/list.php", compact('lessons','tests'), "subjects List", true);
-    }
-    public function tests_create($id){
-        $lessons = $this->lessonModel->getLessonById($id);
-        $tests = $this->testModel->getAlltests();
-        renderAdminView("view/tests/create.php", compact('lessons','tests'), "subjects List", true);
-
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
     }
     public function questions_index($id)
     {
         $tests = $this->testModel->getTestById($id);
         $questions = $this->testModel->getAllquestions();
-<<<<<<< HEAD
         renderAdminView("view/questions/create.php", compact('tests', 'questions'), "subjects List", true);
-=======
-        renderAdminView("view/questions/create.php", compact('tests','questions'), "subjects List", true);
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
     }
     public function show($id)
     {
@@ -92,11 +74,7 @@ class TestController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once "model/ValidateModel.php";
             $validate = new Validate();
-<<<<<<< HEAD
             $title = $_POST['title'] ?? '';
-=======
-            $title = $_POST['title']?? '';
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
             $lessons_id = $_POST['lessons_id'];
             $validate->checkRequired('title', $title, "Tests name is required.");
             $validate->checkRequired('lessons_id', $lessons_id, "Lesson ID is required.");
@@ -123,7 +101,6 @@ class TestController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once "model/ValidateModel.php";
             $validate = new Validate();
-<<<<<<< HEAD
             $tests_id = $_POST['tests_id'] ?? '';
             $questions_text = $_POST['questions_text'] ?? '';
             $option_a = $_POST['option_a'] ?? '';
@@ -131,15 +108,6 @@ class TestController
             $option_c = $_POST['option_c'] ?? '';
             $option_d = $_POST['option_d'] ?? '';
             $correct_option = $_POST['correct_option'] ?? '';
-=======
-            $tests_id = $_POST['tests_id']?? '';
-            $questions_text = $_POST['questions_text']?? '';
-            $option_a = $_POST['option_a']?? '';
-            $option_b = $_POST['option_b']?? '';
-            $option_c = $_POST['option_c']?? '';
-            $option_d = $_POST['option_d']?? '';
-            $correct_option = $_POST['correct_option']?? '';
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
             $validate->checkRequired('tests_id', $tests_id, "Tests ID is required.");
             $validate->checkRequired('questions_text', $questions_text, "Questions text is required.");
             $validate->checkRequired('option_a', $option_a, "Option A is required.");
@@ -148,11 +116,7 @@ class TestController
             $validate->checkRequired('option_d', $option_d, "Option D is required.");
             $validate->checkRequired('correct_option', $correct_option, "Correct option is required.");
             if ($validate->passed()) {
-<<<<<<< HEAD
                 $this->testModel->createQuestions($tests_id, $questions_text, $option_a, $option_b, $option_c, $option_d, $correct_option);
-=======
-                $this->testModel->createQuestions($tests_id, $questions_text,$option_a,$option_b,$option_c,$option_d,$correct_option);
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
                 $_SESSION['success_message'] = "Subject created successfully!";
                 header("Location: /questions/setup/$tests_id");
                 exit;
@@ -190,11 +154,7 @@ class TestController
             $lessons = $this->lessonModel->getAllLessons();
             $categoryModel = new CategoryModel();
             $categories = $categoryModel->getAllCategories();
-<<<<<<< HEAD
             renderAdminView("view/subject/subject_edit.php", compact('subject', 'categories', 'lessons'), "Edit Subject");
-=======
-            renderAdminView("view/subject/subject_edit.php", compact('subject', 'categories','lessons'), "Edit Subject");
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
         }
     }
 
@@ -217,7 +177,6 @@ class TestController
         header("Location: /subjects");
         exit;
     }
-<<<<<<< HEAD
 
     // Xử lý bài kiểm tra và lưu câu trả lời của người dùng
     public function submitQuiz($test_id)
@@ -244,6 +203,4 @@ class TestController
         header("Location: /subjects/quiz/$test_id");
         exit;
     }
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 }
