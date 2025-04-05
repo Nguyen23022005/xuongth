@@ -25,4 +25,7 @@
     <p class="text-center mt-3">
         Chưa có tài khoản? <a href="/register">Register</a>
     </p>
+    <p class="text-center mt-2">
+    <a href="/quenmatkhau">Quên mật khẩu?</a>
+</p>
 </div>

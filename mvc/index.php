@@ -45,6 +45,10 @@ $router->addRoute("/auth/delete/{id}", [$authController, "delete"], ['isAdmin'])
 $router->addRoute("/auth/forgotPW", [$authController, "forgotPassword"]);
 $router->addRoute("/auth/profile", [$authController, "profile"]);
 
+$router->addRoute("/quenmatkhau", [$authController, "quenmatkhau"]);
+// $router->addRoute("/quenmatkhau/sendemail", [$authController, "sendEmail"]);
+$router->addRoute("/thongbao", [$authController, "thongbao"]);
+
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
