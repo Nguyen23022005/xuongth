@@ -15,7 +15,7 @@
                                             name="q<?= $index ?>"
                                             value="<?= $option ?>"
                                             data-question-id="<?= $question['id'] ?>"
-                                            <?= ($question['user_answer'] == $option) ? 'checked' : '' ?> <!-- Hiển thị câu đã chọn -->
+                                            <?= ($question['user_answer'] == $option) ? 'checked' : '' ?>
                                         >
                                         <label class="form-check-label"><?= htmlspecialchars($question["option_$option"]) ?></label>
                                     </div>
