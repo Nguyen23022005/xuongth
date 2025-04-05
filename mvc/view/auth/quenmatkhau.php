@@ -5,7 +5,7 @@ if (isset($_POST['nutguiyeucau'])) {
     $email = $_POST['email'];
     $conn = new PDO("mysql:host=localhost;dbname=xuongth", "root", "");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$email]);
@@ -13,32 +13,32 @@ if (isset($_POST['nutguiyeucau'])) {
     if ($cout == 0) {
         $loi = "Email không tồn tại trong hệ thống";
     } else {
-        $matkhaumoi = substr( md5( rand(0,999999)) , 0, 8);
+        $raw = rand(100000, 999999) . time();
+        $matkhaumoi = substr(hash('sha256', $raw), 0, 10);
+        $hashedPassword = password_hash($matkhaumoi, PASSWORD_BCRYPT);
+        $hashedPassword = password_hash($matkhaumoi, PASSWORD_BCRYPT);
         $sql = "UPDATE users SET password = ? WHERE email = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$matkhaumoi, $email]);
+        $stmt->execute([$hashedPassword, $email]);
         // echo "<script>alert('Mật khẩu mới của bạn là: $matkhaumoi');</script>";
         $kg = nickguimai($email, $matkhaumoi);
         if ($kg == true) {
             // header("location:thongbao.php");
             $thongbao = "Vui lòng kiểm tra email để lấy mật khẩu mới.";
         }
-
-
-        
-
     }
 }
 ?>
 <?php
-function nickguimai($email, $matkhaumoi){
-    require "PHPMailer-master/src/PHPMailer.php"; 
-    require "PHPMailer-master/src/SMTP.php"; 
-    require 'PHPMailer-master/src/Exception.php'; 
-    $mail = new PHPMailer\PHPMailer\PHPMailer(true);//true:enables exceptions
+function nickguimai($email, $matkhaumoi)
+{
+    require "PHPMailer-master/src/PHPMailer.php";
+    require "PHPMailer-master/src/SMTP.php";
+    require 'PHPMailer-master/src/Exception.php';
+    $mail = new PHPMailer\PHPMailer\PHPMailer(true); //true:enables exceptions
     try {
         $mail->SMTPDebug = 0; //0,1,2: chế độ debug
-        $mail->isSMTP();  
+        $mail->isSMTP();
         $mail->CharSet  = "utf-8";
         $mail->Host = 'smtp.gmail.com';  //SMTP servers
         $mail->SMTPAuth = true; // Enable authentication
@@ -46,8 +46,8 @@ function nickguimai($email, $matkhaumoi){
         $mail->Password = 'kxhi khvj rkkq sfef';   // SMTP password
         $mail->SMTPSecure = 'ssl';  // encryption TLS/SSL 
         $mail->Port = 465;  // port to connect to                
-        $mail->setFrom('sangtmpk03780@gmail.com', 'nick final' ); 
-        $mail->addAddress($email); 
+        $mail->setFrom('sangtmpk03780@gmail.com', 'nick final');
+        $mail->addAddress($email);
         $mail->isHTML(true);  // Set email format to HTML
         $mail->Subject = 'gui lai mat khau';
         $noidungthu = "
@@ -58,9 +58,9 @@ function nickguimai($email, $matkhaumoi){
         <hr>
         <p><strong>Chú ý:</strong> Đây là email tự động, vui lòng không trả lời.</p>
         <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
-    "; 
+    ";
         $mail->Body = $noidungthu;
-        $mail->smtpConnect( array(
+        $mail->smtpConnect(array(
             "ssl" => array(
                 "verify_peer" => false,
                 "verify_peer_name" => false,
@@ -74,24 +74,24 @@ function nickguimai($email, $matkhaumoi){
     }
 }
 ?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" >
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
 <form style="width:500px;" class="border border-primary border-2 m-auto p-2" method="post">
-  <h2 class="text-center">Quên mật khẩu</h2>
-  <?php if ($loi != "") { ?>
-  <div class="alert alert-danger" role="alert">
-    <?php echo $loi; ?>
-  </div>
-  <?php } ?>
+    <h2 class="text-center">Quên mật khẩu</h2>
+    <?php if ($loi != "") { ?>
+        <div class="alert alert-danger" role="alert">
+            <?php echo $loi; ?>
+        </div>
+    <?php } ?>
     <?php if ($thongbao != ""): ?>
-    <div class="alert alert-success" role="alert">
-      <?= $thongbao ?>
+        <div class="alert alert-success" role="alert">
+            <?= $thongbao ?>
+        </div>
+    <?php endif; ?>
+    <div class="mb-3">
+        <label for="email" class="form-label">nhap gmail</label>
+        <input type="email" class="form-control" id="email" name="email">
     </div>
-  <?php endif; ?>
-  <div class="mb-3">
-    <label for="email" class="form-label">nhap gmail</label>
-    <input type="email" class="form-control" id="email" name="email">
-  </div>
-  <button type="submit" name="nutguiyeucau" class="btn btn-primary">Submit</button>
+    <button type="submit" name="nutguiyeucau" class="btn btn-primary">Submit</button>
     <a href="/login" class="btn btn-primary">Quay lại</a>
 
 
