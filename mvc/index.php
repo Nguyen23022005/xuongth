@@ -48,6 +48,9 @@ $router->addRoute("/auth/profile", [$authController, "profile"]);
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
+$router->addRoute("/quenmatkhau", [$authController, "quenmatkhau"]);
+// $router->addRoute("/quenmatkhau/sendemail", [$authController, "sendEmail"]);
+$router->addRoute("/thongbao", [$authController, "thongbao"]);
 
 $router->addRoute("/profile", [$userController, "index"]);
 $router->addRoute("/profile/edit/{id}", [$userController, "edit"]);

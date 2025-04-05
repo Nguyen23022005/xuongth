@@ -191,4 +191,13 @@ class AuthController
         header("Location: /login");
         exit;
     }
+    public function quenmatkhau()
+    {
+        renderView("view/auth/quenmatkhau.php", [], "Quên mật khẩu");
+    }
+    public function thongbao()
+    {
+        renderView("view/thongbao.php", [], "Thông báo");
+    }
+
 }
