@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>BÀI KIỂM TRA MỚI</h1>
 <form method="POST" action="/tests/create">
     <div class="mb-3">
@@ -18,6 +19,8 @@
 <br>
 <br>
 <br>
+=======
+>>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 <h3 class="">DANH SÁCH BÀI KIỂM TRA</h3>
 <div class="card mb-4">
     <div class="card-header">
@@ -26,7 +29,11 @@
     </div>
     <div class="card-body">
         <table id="datatablesSimple">
+<<<<<<< HEAD
             <a href="/tests/create/<?= $lessons['id']; ?>" class="btn btn-success mb-3">
+=======
+            <a href="/tests/setup_create/<?= $lessons['id']; ?>" class="btn btn-success mb-3">
+>>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
                 <i class="fas fa-plus-circle"></i> Khóa Học Mới
             </a>
             <thead>

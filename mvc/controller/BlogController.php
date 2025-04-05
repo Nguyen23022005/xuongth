@@ -200,4 +200,8 @@ class BlogController
             exit;
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
