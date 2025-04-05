@@ -62,7 +62,8 @@
                                 <a class="nav-link" href="/subjects">Quản Lý Môn Học</a>
                                 <a class="nav-link" href="/categories">Quản Lý Danh Mục</a>
                                 <a class="nav-link" href="/discounts">Quản Lý Mã Giảm Giá</a>
-                                <a class="nav-link" href="/comments">Quản Lý Comment</a> 
+                                <a class="nav-link" href="/comments">Quản Lý Comment</a>
+                                <a class="nav-link" href="/blog">Quản Lý tin tức</a> 
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

@@ -10,6 +10,7 @@ require_once "controller/DiscountController.php";
 require_once "controller/TestController.php";
 require_once "controller/UserController.php";
 require_once "controller/CommentController.php";
+require_once "controller/BlogController.php";
 
 
 
@@ -27,6 +28,7 @@ $discountController = new DiscountController();
 $testController = new TestController();
 $userController = new UserController();
 $commentController = new CommentController();
+$blogController = new BlogController();
 
 
 $router->addRoute("/admin", function () {
@@ -119,9 +121,19 @@ $router->addRoute("/questions/delete/{id}", [$testController, "deletequestions"]
 $router->addRoute("/tests/results", [$testController, "results"]);
 
 // comment
+
 $router->addRoute("/comments/{lessonId}", [$commentController, "index"]);
 $router->addRoute("/comments/edit/{id}", [$commentController, "edit"]);
 $router->addRoute("/comments/delete/{id}", [$commentController, "delete"]);
 $router->addRoute("/comments/create/{lessonId}", [$commentController, "create"]);
+
+//blog
+$router->addRoute("/blog", [$blogController, "index"]);
+$router->addRoute("/blogg/{id}", [$blogController, "list"]);
+$router->addRoute("/blog/create", [$blogController, "create"]);
+$router->addRoute("/blog/edit/{id}", [$blogController, "edit"]);
+$router->addRoute("/blog/delete/{id}", [$blogController, "delete"]);
+$router->addRoute("/index1", [$blogController, "index1"]);
+$router->addRoute("/blog/toggle/{id}", [$blogController, "toggleVisibility"]);
 
 $router->dispatch();
