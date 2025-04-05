@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
-<<<<<<< HEAD
 -- Thời gian đã tạo: Th4 05, 2025 lúc 03:09 AM
-=======
--- Thời gian đã tạo: Th3 24, 2025 lúc 03:44 PM
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -47,7 +43,6 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD
 -- Cấu trúc bảng cho bảng `comments`
 --
 
@@ -63,8 +58,6 @@ CREATE TABLE `comments` (
 -- --------------------------------------------------------
 
 --
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 -- Cấu trúc bảng cho bảng `discounts`
 --
 
@@ -95,12 +88,7 @@ CREATE TABLE `lessons` (
 --
 
 INSERT INTO `lessons` (`id`, `subject_id`, `title`, `video`, `status`) VALUES
-<<<<<<< HEAD
 (10, 1, 'Bài 1', 'https://www.youtube.com/watch?v=xvFZjo5PgG0', 'aaaaa');
-=======
-(7, 1, 'Bài 2', 'https://youtu.be/qiyTDxBjmIw?list=PLIiLuIrSErz46J2oRpuTMXuVTHkwDabfD', '[New 100%]'),
-(8, 1, 'Bài 3', 'https://youtu.be/U7_Cs1x0RL0?si=zNkjzvfPsyoSYktO', 'aaaaaaaa');
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 -- --------------------------------------------------------
 
@@ -124,12 +112,8 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `tests_id`, `questions_text`, `option_a`, `option_b`, `option_c`, `option_d`, `correct_option`) VALUES
-<<<<<<< HEAD
 (20, 10, 'a', 'a', 'a', 'a', 'a', 'a'),
 (21, 10, 'b', 'b', 'b', 'b', 'b', 'b');
-=======
-(8, 6, 'câu 2: 3+1=?', '2', '5', '4', '6', 'c');
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 -- --------------------------------------------------------
 
@@ -140,29 +124,21 @@ INSERT INTO `questions` (`id`, `tests_id`, `questions_text`, `option_a`, `option
 CREATE TABLE `subjects` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-<<<<<<< HEAD
   `user_id` int(11) DEFAULT NULL,
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
   `name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   `price` int(50) NOT NULL,
   `sku` varchar(50) NOT NULL,
   `status` varchar(20) NOT NULL,
-<<<<<<< HEAD
   `description` text DEFAULT NULL,
   `total_lessons` int(50) DEFAULT NULL,
   `user_quantity` int(50) DEFAULT NULL
-=======
-  `description` text DEFAULT NULL
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `subjects`
 --
 
-<<<<<<< HEAD
 INSERT INTO `subjects` (`id`, `category_id`, `user_id`, `name`, `image`, `price`, `sku`, `status`, `description`, `total_lessons`, `user_quantity`) VALUES
 (1, 1, 63, 'PHP Cơ Bản', 'https://i.pinimg.com/736x/33/75/a8/3375a8fca0a82a2bfab486547d95a98e.jpg', 200000, 'PHP001', 'active', 'ádasdas', 2, 7),
 (3, 1, 63, 'PHP SUPERHERO', 'https://th.bing.com/th/id/OIP.qF-5pDFdeBN8DhoN2tlBcQHaD3?rs=1&pid=ImgDetMain', 120000, 'akml', 'active', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', NULL, 0),
@@ -172,16 +148,6 @@ INSERT INTO `subjects` (`id`, `category_id`, `user_id`, `name`, `image`, `price`
 (7, 3, 63, 'MAKETING SUPERHERO', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 120000, 'akml4565678777454', 'active', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', NULL, 0),
 (8, 1, 63, 'MAKETING SUPERHERO', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 120000, 'akml4565678777454', 'activeasdas', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', NULL, 0),
 (10, 1, 63, 'YTHANH ÊBAN', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 200000, 'sdasdasdzcsascfassadasdsd', 'active', 'vvvvvvvvvvvvvvvvvvvvvvvvvvvvv', NULL, 1);
-=======
-INSERT INTO `subjects` (`id`, `category_id`, `name`, `image`, `price`, `sku`, `status`, `description`) VALUES
-(1, 1, 'PHP Cơ Bản', 'https://i.pinimg.com/736x/33/75/a8/3375a8fca0a82a2bfab486547d95a98e.jpg', 2000000, 'PHP001', 'active', 'ádasdas'),
-(3, 1, 'PHP SUPERHERO', 'https://th.bing.com/th/id/OIP.qF-5pDFdeBN8DhoN2tlBcQHaD3?rs=1&pid=ImgDetMain', 120000, 'akml', 'active', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-(4, 1, 'CSS SUPERHERO', 'https://albertraluy.github.io/A5-reglas/img/CSS-Logo.png', 120000, 'akml123', 'active', 'Không Tiền Thì Cook'),
-(5, 3, 'MAKETING SUPERHERO', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 120000, 'akml4565678777454', 'active', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-(6, 3, 'MAKETING SUPERHERO', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 120000, 'akml4565678777454', 'active', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-(7, 3, 'MAKETING SUPERHERO', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 120000, 'akml4565678777454', 'active', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa'),
-(8, 1, 'MAKETING SUPERHERO', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 120000, 'akml4565678777454', 'activeasdas', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 -- --------------------------------------------------------
 
@@ -200,12 +166,7 @@ CREATE TABLE `tests` (
 --
 
 INSERT INTO `tests` (`id`, `lessons_id`, `title`) VALUES
-<<<<<<< HEAD
 (10, 10, 'ssssssss');
-=======
-(6, 7, 'Bài 1'),
-(7, 8, 'bài 1');
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 -- --------------------------------------------------------
 
@@ -220,19 +181,14 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `name` varchar(250) NOT NULL,
   `role` enum('admin','user','quanly') DEFAULT 'user',
-<<<<<<< HEAD
   `phone` int(11) NOT NULL,
   `image` varchar(225) NOT NULL
-=======
-  `phone` int(11) NOT NULL
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-<<<<<<< HEAD
 INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `name`, `role`, `phone`, `image`) VALUES
 (57, 'phamminhtu28055@gmail.com', '$2y$10$15uE26mNHnTK9ua6o/ygKuZllUg0iNvo8zVLREdIFEUpXqH4ge7m2', '2025-03-10 10:49:10', 'Phạm Minh Tú', 'admin', 0, ''),
 (62, 'heilpmtu@gmail.com', '$2y$10$jUe.dKHi/19dMX395at84eWHVxPA1REgmLkqff..H0DRRqWSupA12', '2025-03-13 15:51:15', 'Phạm Minh Tú', 'admin', 0, ''),
@@ -252,12 +208,6 @@ CREATE TABLE `user_answers` (
   `selected_option` varchar(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-=======
-INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `name`, `role`, `phone`) VALUES
-(57, 'phamminhtu28055@gmail.com', '$2y$10$15uE26mNHnTK9ua6o/ygKuZllUg0iNvo8zVLREdIFEUpXqH4ge7m2', '2025-03-10 10:49:10', 'Phạm Minh Tú', 'admin', 0),
-(62, 'heilpmtu@gmail.com', '$2y$10$jUe.dKHi/19dMX395at84eWHVxPA1REgmLkqff..H0DRRqWSupA12', '2025-03-13 15:51:15', 'Phạm Minh Tú', 'admin', 0),
-(63, 'ebanythanh1@gmail.com', '$2y$10$EjWtHpXt7H7gZ5X.uJToVe008JOUda7R3sb.49PN4ruPv/o2t84S.', '2025-03-15 03:35:15', 'YTHANH ÊBAN', 'admin', 0);
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 -- --------------------------------------------------------
 
@@ -280,19 +230,6 @@ CREATE TABLE `user_subjects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
-<<<<<<< HEAD
-=======
--- Đang đổ dữ liệu cho bảng `user_subjects`
---
-
-INSERT INTO `user_subjects` (`id`, `subject_id`, `user_id`, `categories_id`, `name`, `image`, `price`, `sku`, `description`, `status`, `pttt`) VALUES
-(1, 4, 63, 1, 'CSS SUPERHERO', 'https://albertraluy.github.io/A5-reglas/img/CSS-Logo.png', 120000, 'akml123', 'Không Tiền Thì Cook', 'Đã Tham Gia', 'cod'),
-(2, 4, 63, 1, 'CSS SUPERHERO', 'https://albertraluy.github.io/A5-reglas/img/CSS-Logo.png', 120000, 'akml123', 'Không Tiền Thì Cook', 'Đã Tham Gia', 'cod'),
-(3, 8, 63, 1, 'MAKETING SUPERHERO', 'https://dprintworldwide.com/wp-content/uploads/2018/04/marketing-with-posters.jpg', 120000, 'akml4565678777454', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Đã Tham Gia', 'cod'),
-(4, 3, 63, 3, 'PHP SUPERHERO', 'https://th.bing.com/th/id/OIP.qF-5pDFdeBN8DhoN2tlBcQHaD3?rs=1&pid=ImgDetMain', 20000, 'akml', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Đã Tham Gia', 'cod');
-
---
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 -- Chỉ mục cho các bảng đã đổ
 --
 
@@ -303,7 +240,6 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
-<<<<<<< HEAD
 -- Chỉ mục cho bảng `comments`
 --
 ALTER TABLE `comments`
@@ -312,8 +248,6 @@ ALTER TABLE `comments`
   ADD KEY `user_id` (`user_id`);
 
 --
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 -- Chỉ mục cho bảng `discounts`
 --
 ALTER TABLE `discounts`
@@ -353,7 +287,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
-<<<<<<< HEAD
 -- Chỉ mục cho bảng `user_answers`
 --
 ALTER TABLE `user_answers`
@@ -363,8 +296,6 @@ ALTER TABLE `user_answers`
   ADD KEY `question_id` (`question_id`);
 
 --
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 -- Chỉ mục cho bảng `user_subjects`
 --
 ALTER TABLE `user_subjects`
@@ -381,15 +312,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
-<<<<<<< HEAD
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 -- AUTO_INCREMENT cho bảng `discounts`
 --
 ALTER TABLE `discounts`
@@ -399,41 +327,25 @@ ALTER TABLE `discounts`
 -- AUTO_INCREMENT cho bảng `lessons`
 --
 ALTER TABLE `lessons`
-<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-=======
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 --
 -- AUTO_INCREMENT cho bảng `questions`
 --
 ALTER TABLE `questions`
-<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-=======
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
 --
 ALTER TABLE `subjects`
-<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-=======
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 --
 -- AUTO_INCREMENT cho bảng `tests`
 --
 ALTER TABLE `tests`
-<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-=======
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -442,7 +354,6 @@ ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
-<<<<<<< HEAD
 -- AUTO_INCREMENT cho bảng `user_answers`
 --
 ALTER TABLE `user_answers`
@@ -453,19 +364,12 @@ ALTER TABLE `user_answers`
 --
 ALTER TABLE `user_subjects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
-=======
--- AUTO_INCREMENT cho bảng `user_subjects`
---
-ALTER TABLE `user_subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
 
 --
-<<<<<<< HEAD
 -- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
@@ -473,8 +377,6 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 -- Các ràng buộc cho bảng `lessons`
 --
 ALTER TABLE `lessons`
@@ -485,7 +387,6 @@ ALTER TABLE `lessons`
 --
 ALTER TABLE `subjects`
   ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
-<<<<<<< HEAD
 
 --
 -- Các ràng buộc cho bảng `user_answers`
@@ -494,8 +395,6 @@ ALTER TABLE `user_answers`
   ADD CONSTRAINT `user_answers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `user_answers_ibfk_2` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`),
   ADD CONSTRAINT `user_answers_ibfk_3` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`);
-=======
->>>>>>> 577123a6da4391f258f4a0d57ee894809e7eb55e
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
