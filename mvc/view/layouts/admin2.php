@@ -64,6 +64,7 @@
                                 <a class="nav-link" href="/discounts">Quản Lý Mã Giảm Giá</a>
                                 <a class="nav-link" href="/comments">Quản Lý Comment</a>
                                 <a class="nav-link" href="/blog">Quản Lý tin tức</a> 
+                                <a class="nav-link" href="/totals">Tổng Doanh Thu</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

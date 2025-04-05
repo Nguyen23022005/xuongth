@@ -84,6 +84,8 @@ $router->addRoute("/", [$subjectsController, "shows"]);
 $router->addRoute("/create/sendemail", [$subjectsController, "subject_email"]);
 $router->addRoute("/subjects/email/{id}", [$subjectsController, "show_email"]);
 
+$router->addRoute("/totals", [$subjectsController, "doanhthu"], ['isAdmin']);
+
 
 // 
 $router->addRoute("/subjects/register/{id}", [$subjectsController, "show_register"]);
