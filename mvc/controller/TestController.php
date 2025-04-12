@@ -27,26 +27,26 @@ class TestController
     {
         $subjects = $this->subjectsModel->getSubjectById($id);
         $lessons = $this->lessonModel->getAllLessons();
-        renderAdminView("view/subject/subject_detail_admin.php", compact('subjects','lessons'), "subjects List", true);
+        renderAdminView("view/subject/subject_detail_admin.php", compact('subjects', 'lessons'), "subjects List", true);
     }
 
     public function tests_index($id)
     {
         $lessons = $this->lessonModel->getLessonById($id);
         $tests = $this->testModel->getAlltests();
-        renderAdminView("view/tests/list.php", compact('lessons','tests'), "subjects List", true);
+        renderAdminView("view/tests/list.php", compact('lessons', 'tests'), "subjects List", true);
     }
-    public function tests_create($id){
+    public function tests_create($id)
+    {
         $lessons = $this->lessonModel->getLessonById($id);
         $tests = $this->testModel->getAlltests();
-        renderAdminView("view/tests/create.php", compact('lessons','tests'), "subjects List", true);
-
+        renderAdminView("view/tests/create.php", compact('lessons', 'tests'), "subjects List", true);
     }
     public function questions_index($id)
     {
         $tests = $this->testModel->getTestById($id);
         $questions = $this->testModel->getAllquestions();
-        renderAdminView("view/questions/create.php", compact('tests','questions'), "subjects List", true);
+        renderAdminView("view/questions/create.php", compact('tests', 'questions'), "subjects List", true);
     }
     public function show($id)
     {
@@ -74,7 +74,7 @@ class TestController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once "model/ValidateModel.php";
             $validate = new Validate();
-            $title = $_POST['title']?? '';
+            $title = $_POST['title'] ?? '';
             $lessons_id = $_POST['lessons_id'];
             $validate->checkRequired('title', $title, "Tests name is required.");
             $validate->checkRequired('lessons_id', $lessons_id, "Lesson ID is required.");
@@ -101,13 +101,13 @@ class TestController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once "model/ValidateModel.php";
             $validate = new Validate();
-            $tests_id = $_POST['tests_id']?? '';
-            $questions_text = $_POST['questions_text']?? '';
-            $option_a = $_POST['option_a']?? '';
-            $option_b = $_POST['option_b']?? '';
-            $option_c = $_POST['option_c']?? '';
-            $option_d = $_POST['option_d']?? '';
-            $correct_option = $_POST['correct_option']?? '';
+            $tests_id = $_POST['tests_id'] ?? '';
+            $questions_text = $_POST['questions_text'] ?? '';
+            $option_a = $_POST['option_a'] ?? '';
+            $option_b = $_POST['option_b'] ?? '';
+            $option_c = $_POST['option_c'] ?? '';
+            $option_d = $_POST['option_d'] ?? '';
+            $correct_option = $_POST['correct_option'] ?? '';
             $validate->checkRequired('tests_id', $tests_id, "Tests ID is required.");
             $validate->checkRequired('questions_text', $questions_text, "Questions text is required.");
             $validate->checkRequired('option_a', $option_a, "Option A is required.");
@@ -116,7 +116,7 @@ class TestController
             $validate->checkRequired('option_d', $option_d, "Option D is required.");
             $validate->checkRequired('correct_option', $correct_option, "Correct option is required.");
             if ($validate->passed()) {
-                $this->testModel->createQuestions($tests_id, $questions_text,$option_a,$option_b,$option_c,$option_d,$correct_option);
+                $this->testModel->createQuestions($tests_id, $questions_text, $option_a, $option_b, $option_c, $option_d, $correct_option);
                 $_SESSION['success_message'] = "Subject created successfully!";
                 header("Location: /questions/setup/$tests_id");
                 exit;
@@ -154,7 +154,7 @@ class TestController
             $lessons = $this->lessonModel->getAllLessons();
             $categoryModel = new CategoryModel();
             $categories = $categoryModel->getAllCategories();
-            renderAdminView("view/subject/subject_edit.php", compact('subject', 'categories','lessons'), "Edit Subject");
+            renderAdminView("view/subject/subject_edit.php", compact('subject', 'categories', 'lessons'), "Edit Subject");
         }
     }
 
@@ -175,6 +175,32 @@ class TestController
             $_SESSION['success_message'] = "Subject deleted successfully!";
         }
         header("Location: /subjects");
+        exit;
+    }
+
+    // Xử lý bài kiểm tra và lưu câu trả lời của người dùng
+    public function submitQuiz($test_id)
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        $user_id = $_SESSION['user_id'];
+        $user_answers = json_decode($_POST['user_answers'], true);
+
+        // Kiểm tra nếu câu trả lời có question_id hợp lệ
+        foreach ($user_answers as $answer) {
+            $question_id = $answer['question_id'];
+            if (!$this->testModel->isValidQuestionId($question_id)) {
+                throw new Exception("Question ID không hợp lệ.");
+            }
+
+            $this->testModel->saveUserAnswer($user_id, $test_id, $question_id, $answer['selected_option']);
+        }
+
+        // Chuyển hướng đến trang kết quả
+        header("Location: /subjects/quiz/$test_id");
         exit;
     }
 }

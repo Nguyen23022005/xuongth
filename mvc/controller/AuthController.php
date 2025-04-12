@@ -171,6 +171,7 @@ class AuthController
 
                 if ($user) {
                     $_SESSION['user'] = $user;
+                    $_SESSION['user_id'] = $user['id'];
                     header("Location: /");
                     exit;
                 } else {
@@ -191,5 +192,13 @@ class AuthController
         session_destroy();
         header("Location: /login");
         exit;
+    }
+    public function quenmatkhau()
+    {
+        renderView("view/auth/quenmatkhau.php", [], "Quên mật khẩu");
+    }
+    public function thongbao()
+    {
+        renderView("view/thongbao.php", [], "Thông báo");
     }
 }

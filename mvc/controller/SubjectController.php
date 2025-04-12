@@ -2,7 +2,7 @@
 require_once "model/SubjectModel.php";
 require_once "model/LessonModel.php";
 require_once "model/TestModel.php";
-require_once "model/CommentModel.php";  
+require_once "model/CommentModel.php";
 require_once "view/helpers.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -36,28 +36,42 @@ class SubjectController
         $lessons = $this->lessonModel->getAllLessons();
         renderAdminView("view/subject/subject_detail_admin.php", compact('subjects', 'lessons'), "subjects List", true);
     }
+
     public function quiz_index($id)
     {
-        $tests = $this->testModel->getTestById($id);
-        $questions = $this->testModel->getAllquestions();
-        renderView("view/subject/subject_quiz.php", compact('tests', 'questions'), "subjects List", true);
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (!isset($_SESSION['user_id'])) {
+            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+            header('Location: /login');
+            exit;
+        }
+
+        $user_id = $_SESSION['user_id'];  // Lấy user_id từ session
+
+        // Lấy bài kiểm tra theo id
+        $test = $this->testModel->getTestById($id);
+
+        // Lấy các câu hỏi của bài kiểm tra
+        $questions = $this->testModel->getQuestionsForUser($id, $user_id);  // Lọc câu hỏi cho người dùng
+
+        renderView("view/subject/subject_quiz.php", compact('test', 'questions'), "Làm bài quiz");
     }
 
     public function show($id)
     {
         // Lấy thông tin môn học
         $subject = $this->subjectsModel->getSubjectById($id);
-    
+
         // Kiểm tra nếu môn học không tồn tại
         if (!$subject) {
             $_SESSION['error_message'] = "Môn học không tồn tại.";
             header("Location: /");
             exit;
         }
-    
+
         // Lấy danh sách bài học của môn học
         $lessons = $this->lessonModel->getLessonsBySubjectId($id);
-    
+
         // Lấy danh sách bình luận của bài học đầu tiên (nếu có)
         $comments = [];
         $lessonId = null;
@@ -65,11 +79,11 @@ class SubjectController
             $lessonId = $lessons[0]['id'];
             $comments = $this->commentModel->getAllCommentsByLessonId($lessonId);
         }
-    
+
         // Lấy danh sách bài kiểm tra và câu hỏi
         $tests = $this->testModel->getAlltests(); // Lấy tất cả bài kiểm tra
         $questions = $this->testModel->getAllQuestions(); // Lấy tất cả câu hỏi
-    
+
         // Render view subject_detail với thông tin môn học, bài học, bình luận, bài kiểm tra và câu hỏi
         renderView(
             "view/subject/subject_detail.php",
@@ -304,5 +318,11 @@ class SubjectController
         } catch (Exception $e) {
             error_log("Không thể gửi email: " . $mail->ErrorInfo);
         }
+    }
+
+    public function doanhthu()
+    {
+        $subjects = $this->subjectsModel->getAllSubjects();
+        renderAdminView("view/total_revenue/list.php", compact('subjects'), "Course List");
     }
 }

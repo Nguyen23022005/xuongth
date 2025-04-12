@@ -10,6 +10,7 @@ require_once "controller/DiscountController.php";
 require_once "controller/TestController.php";
 require_once "controller/UserController.php";
 require_once "controller/CommentController.php";
+require_once "controller/BlogController.php";
 
 
 
@@ -27,6 +28,7 @@ $discountController = new DiscountController();
 $testController = new TestController();
 $userController = new UserController();
 $commentController = new CommentController();
+$blogController = new BlogController();
 
 
 $router->addRoute("/admin", function () {
@@ -46,9 +48,17 @@ $router->addRoute("/auth/profile", [$authController, "profile"]);
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
+$router->addRoute("/login", [$authController, "login"]);
+$router->addRoute("/logout", [$authController, "logout"]);
+$router->addRoute("/register", [$authController, "register"]);
+$router->addRoute("/quenmatkhau", [$authController, "quenmatkhau"]);
+// $router->addRoute("/quenmatkhau/sendemail", [$authController, "sendEmail"]);
+$router->addRoute("/thongbao", [$authController, "thongbao"]);
 
 $router->addRoute("/profile", [$userController, "index"]);
 $router->addRoute("/profile/edit/{id}", [$userController, "edit"]);
+$router->addRoute("/admin_profile/edit/{id}", [$userController, "edit_admin"]);
+
 
 // $router->addRoute("/auth", [$userController, "index"],  ['isAdmin']);
 // $router->addRoute("/auths/create", [$userController, "create"], ['isAdmin']);
@@ -71,10 +81,12 @@ $router->addRoute("/subjects/edit/{id}", [$subjectsController, "edit"], ['isAdmi
 $router->addRoute("/subjects/delete/{id}", [$subjectsController, "delete"], ['isAdmin']);
 $router->addRoute("/subjects/detail/{id}", [$subjectsController, "admin_index"]);
 $router->addRoute("/subjects/quiz/{id}", [$subjectsController, "quiz_index"]);
-$router->addRoute("/Course" , [$subjectsController, "showCourse"]);
+$router->addRoute("/Course", [$subjectsController, "showCourse"]);
 $router->addRoute("/", [$subjectsController, "shows"]);
 $router->addRoute("/create/sendemail", [$subjectsController, "subject_email"]);
 $router->addRoute("/subjects/email/{id}", [$subjectsController, "show_email"]);
+
+$router->addRoute("/totals", [$subjectsController, "doanhthu"], ['isAdmin']);
 
 
 // 
@@ -109,6 +121,7 @@ $router->addRoute("/discounts/delete/{id}", [$discountController, "delete"]);
 $router->addRoute("/tests", [$testController, "index"]);
 $router->addRoute("/tests/setup/{id}", [$testController, "tests_index"]);
 $router->addRoute("/tests/create", [$testController, "create"]);
+$router->addRoute("/submitQuiz/{test_id}", [$testController, "submitQuiz"]);
 
 // 
 
@@ -119,9 +132,19 @@ $router->addRoute("/questions/delete/{id}", [$testController, "deletequestions"]
 $router->addRoute("/tests/results", [$testController, "results"]);
 
 // comment
+
 $router->addRoute("/comments/{lessonId}", [$commentController, "index"]);
 $router->addRoute("/comments/edit/{id}", [$commentController, "edit"]);
 $router->addRoute("/comments/delete/{id}", [$commentController, "delete"]);
 $router->addRoute("/comments/create/{lessonId}", [$commentController, "create"]);
+
+//blog
+$router->addRoute("/blog", [$blogController, "index"]);
+$router->addRoute("/blogg/{id}", [$blogController, "list"]);
+$router->addRoute("/blog/create", [$blogController, "create"]);
+$router->addRoute("/blog/edit/{id}", [$blogController, "edit"]);
+$router->addRoute("/blog/delete/{id}", [$blogController, "delete"]);
+$router->addRoute("/index1", [$blogController, "index1"]);
+$router->addRoute("/blog/toggle/{id}", [$blogController, "toggleVisibility"]);
 
 $router->dispatch();

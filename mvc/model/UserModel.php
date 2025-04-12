@@ -75,6 +75,47 @@ class UserModel {
         return $stmt->execute();
     }
 
+    public function updateUserFull(
+        $id,
+        $name,
+        $email,
+        $image,
+        $phone,
+        $diachi,
+        $kinhnghiem,
+        $bangcap,
+        $truonghoc,
+        $namhoc
+    ) {
+        $query = "UPDATE users SET 
+                    name = :name,
+                    email = :email,
+                    image = :image,
+                    phone = :phone,
+                    diachi = :diachi,
+                    kinhnghiem = :kinhnghiem,
+                    bangcap = :bangcap,
+                    truonghoc = :truonghoc,
+                    namhoc = :namhoc
+                  WHERE id = :id";
+    
+        $stmt = $this->conn->prepare($query);
+    
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':image', $image);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':diachi', $diachi);
+        $stmt->bindParam(':kinhnghiem', $kinhnghiem);
+        $stmt->bindParam(':bangcap', $bangcap);
+        $stmt->bindParam(':truonghoc', $truonghoc);
+        $stmt->bindParam(':namhoc', $namhoc);
+    
+        return $stmt->execute();
+    }
+    
+
     public function deleteUser($id) {
         $query = "DELETE FROM users WHERE id = :id";
         $stmt = $this->conn->prepare($query);

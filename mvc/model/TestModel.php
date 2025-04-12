@@ -125,4 +125,49 @@ class TestModel
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+    
+    public function getQuestionsForUser($test_id, $user_id)
+    {
+        $query = "
+            SELECT 
+                q.*, 
+                ua.selected_option AS user_answer  -- Lấy câu trả lời của người dùng nếu có
+            FROM questions q
+            LEFT JOIN user_answers ua 
+                ON q.id = ua.question_id 
+                AND ua.user_id = :user_id
+            WHERE q.tests_id = :test_id
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':test_id', $test_id, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function isValidQuestionId($question_id)
+    {
+        $query = "SELECT COUNT(*) FROM questions WHERE id = :question_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':question_id', $question_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function saveUserAnswer($user_id, $test_id, $question_id, $selected_option)
+    {
+        if (!$this->isValidQuestionId($question_id)) {
+            throw new Exception("Question ID không hợp lệ.");
+        }
+
+        $query = "INSERT INTO user_answers (user_id, test_id, question_id, selected_option) VALUES (:user_id, :test_id, :question_id, :selected_option)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':test_id', $test_id, PDO::PARAM_INT);
+        $stmt->bindParam(':question_id', $question_id, PDO::PARAM_INT);
+        $stmt->bindParam(':selected_option', $selected_option);
+        return $stmt->execute();
+    }
 }
