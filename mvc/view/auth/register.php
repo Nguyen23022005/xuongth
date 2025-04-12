@@ -28,6 +28,16 @@
                 <span class="text-danger"><?= $errors['password'] ?></span>
             <?php endif; ?>
         </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select name="role" id="role" class="form-control">
+                <option value="user" <?= isset($_POST['role']) && $_POST['role'] === 'user' ? 'selected' : '' ?>>User</option>
+                <option value="quanly" <?= isset($_POST['role']) && $_POST['role'] === 'quanly' ? 'selected' : '' ?>>Quản lý</option>
+            </select>
+            <?php if (isset($errors['role'])): ?>
+                <span class="text-danger"><?= $errors['role'] ?></span>
+            <?php endif; ?>
+        </div>
         <button type="submit" class="btn btn-primary w-100">Register</button>
     </form>
     <p class="text-center mt-3">

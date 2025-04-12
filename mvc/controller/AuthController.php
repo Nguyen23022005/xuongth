@@ -119,20 +119,21 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once "model/ValidateModel.php";
             $validate = new Validate();
-
+    
             $name = trim($_POST['name']);
             $email = trim($_POST['email']);
             $password = $_POST['password'];
-            $role = 'user';
-
+            $role = $_POST['role'];
+    
             $validate->checkRequired('name', $name, "Tên không được để trống.");
             $validate->checkEmail('email', $email, "Email không hợp lệ.");
             $validate->checkRequired('password', $password, "Mật khẩu không được để trống.");
-
+            $validate->checkRequired('role', $role, "Vai trò không được để trống.");
+    
             if ($this->authModel->checkEmailExists($email)) {
                 $validate->addError('email', "Email đã tồn tại trong hệ thống.");
             }
-
+    
             if ($validate->passed()) {
                 if ($this->authModel->register($name, $email, $password, $role)) {
                     $_SESSION['success_message'] = "Đăng ký thành công! Vui lòng đăng nhập.";
@@ -144,11 +145,11 @@ class AuthController
             } else {
                 $errors = $validate->getErrors();
             }
-
+    
             renderView("view/auth/register.php", compact('errors'), "Đăng ký");
             return;
         }
-
+    
         renderView("view/auth/register.php", [], "Đăng ký");
     }
 
