@@ -57,6 +57,8 @@ $router->addRoute("/thongbao", [$authController, "thongbao"]);
 
 $router->addRoute("/profile", [$userController, "index"]);
 $router->addRoute("/profile/edit/{id}", [$userController, "edit"]);
+$router->addRoute("/admin_profile/edit/{id}", [$userController, "edit_admin"]);
+
 
 // $router->addRoute("/auth", [$userController, "index"],  ['isAdmin']);
 // $router->addRoute("/auths/create", [$userController, "create"], ['isAdmin']);

@@ -65,6 +65,7 @@
                                 <a class="nav-link" href="/comments">Quản Lý Comment</a>
                                 <a class="nav-link" href="/blog">Quản Lý tin tức</a> 
                                 <a class="nav-link" href="/totals">Tổng Doanh Thu</a>
+                                <a class="nav-link" href="/admin_profile/edit/<?= $_SESSION['user']['id']?>">Hồ Sơ</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
