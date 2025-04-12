@@ -18,10 +18,10 @@ class BlogController
     {
         try {
             $blog = $this->blogModel->getBlog(); // Chỉ lấy bài hiển thị
-            renderView("view/blog/index.php", compact('blog'), "list blog");
+            renderAdminView("view/blog/index.php", compact('blog'), "list blog");
         } catch (Exception $e) {
             $errors = ["Error fetching blog posts: " . $e->getMessage()];
-            renderView("view/blog/index.php", compact('errors'), "list blog");
+            renderAdminView("view/blog/index.php", compact('errors'), "list blog");
         }
     }
 
@@ -112,7 +112,7 @@ class BlogController
                 }
             }
         }
-        renderView("view/blog/create.php", compact('errors', 'title', 'author', 'content'), "Create Blog");
+        renderAdminView("view/blog/create.php", compact('errors', 'title', 'author', 'content'), "Create Blog");
     }
 
     public function edit($id)
@@ -170,7 +170,7 @@ class BlogController
                 }
             }
         }
-        renderView("view/blog/blog_edit.php", compact('errors', 'blog', 'title', 'content', 'author', 'imagePath'), "Edit Blog");
+        renderAdminView("view/blog/blog_edit.php", compact('errors', 'blog', 'title', 'content', 'author', 'imagePath'), "Edit Blog");
     }
 
     public function delete($id)
