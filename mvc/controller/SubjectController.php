@@ -3,6 +3,9 @@ require_once "model/SubjectModel.php";
 require_once "model/LessonModel.php";
 require_once "model/TestModel.php";
 require_once "model/CommentModel.php";
+require_once "model/ProgressModel.php";
+require_once "model/UserModel.php";
+require_once 'model/ProgressModel.php';
 require_once "view/helpers.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -15,6 +18,8 @@ class SubjectController
     private $lessonModel;
     private $testModel;
     private $commentModel;
+    private $progressModel;
+    private $userModel;
 
     public function __construct()
     {
@@ -22,6 +27,9 @@ class SubjectController
         $this->lessonModel = new LessonsModel();
         $this->testModel = new TestModel();
         $this->commentModel = new CommentModel();
+        $this->progressModel = new Progress();
+        $this->userModel = new UserModel();
+
     }
 
     public function index()
@@ -37,6 +45,15 @@ class SubjectController
         renderAdminView("view/subject/subject_detail_admin.php", compact('subjects', 'lessons'), "subjects List", true);
     }
 
+    public function user_subject($id)
+    {
+        $subject = $this->subjectsModel->getSubjectById($id);
+        $user_subjects = $this->subjectsModel->getAllUserSubjects();
+        $progresses = $this->progressModel->getProgress();
+        $users = $this->userModel->getAllUser();
+        renderAdminView("view/subject/user_subjects.php", compact('subject', 'progresses','user_subjects','users'), "subjects List", true);
+    }
+
     public function quiz_index($id)
     {
         // Kiểm tra xem người dùng đã đăng nhập hay chưa
@@ -47,14 +64,18 @@ class SubjectController
         }
 
         $user_id = $_SESSION['user_id'];  // Lấy user_id từ session
-
+        $subjects = $this->subjectsModel->getAllSubjects();
+        $lessons = $this->lessonModel->getAllLessons();
         // Lấy bài kiểm tra theo id
         $test = $this->testModel->getTestById($id);
+        $answers = $this->progressModel->getAllAnswers();
+
+
 
         // Lấy các câu hỏi của bài kiểm tra
         $questions = $this->testModel->getQuestionsForUser($id, $user_id);  // Lọc câu hỏi cho người dùng
 
-        renderView("view/subject/subject_quiz.php", compact('test', 'questions'), "Làm bài quiz");
+        renderView("view/subject/subject_quiz.php", compact('test', 'questions', 'subjects','lessons','answers'), "Làm bài quiz");
     }
 
     public function show($id)
@@ -83,11 +104,12 @@ class SubjectController
         // Lấy danh sách bài kiểm tra và câu hỏi
         $tests = $this->testModel->getAlltests(); // Lấy tất cả bài kiểm tra
         $questions = $this->testModel->getAllQuestions(); // Lấy tất cả câu hỏi
+        $progresses = $this->progressModel->getProgress();
 
-        // Render view subject_detail với thông tin môn học, bài học, bình luận, bài kiểm tra và câu hỏi
+        // Render view subject_detail với thông tin môn học, bài học, bình luận, bài kiểm tra và câu hỏi getProgress
         renderView(
             "view/subject/subject_detail.php",
-            compact('subject', 'lessons', 'comments', 'lessonId', 'tests', 'questions'),
+            compact('subject', 'lessons', 'comments', 'lessonId', 'tests', 'questions', 'progresses'),
             "Chi tiết môn học"
         );
     }
@@ -230,9 +252,10 @@ class SubjectController
 
         // Lấy danh sách khóa học theo user_id
         $courses = $this->subjectsModel->getSubjectsByUser($user_id);
+        $progresses = $this->progressModel->getProgress();
 
         // Hiển thị view với danh sách khóa học
-        renderView("view/user_subject/list.php", compact('courses'), "Course List");
+        renderView("view/user_subject/list.php", compact('courses','progresses'), "Course List");
     }
 
     public function subject_email()

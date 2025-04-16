@@ -55,7 +55,7 @@
                                 <?php endif; ?>
                             </td>
                             <td class="text-center">
-                                <a href="/subjects/<?= $subject['id'] ?>" class="btn btn-info btn-sm">
+                                <a href="/subjects/user/<?= $subject['id'] ?>" class="btn btn-info btn-sm">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="/subjects/edit/<?= $subject['id'] ?>" class="btn btn-warning btn-sm">

@@ -197,10 +197,24 @@
                         </div>
                         <p class="mt-2" id="discount_message"></p>
                     </div>
-
+                    <?php
+                    $totalTests = 0;
+                    foreach ($lessons as $lesson):
+                        if ($lesson['subject_id'] === $subject['id']) {
+                            foreach ($tests as $test):
+                                if ($test['lessons_id'] === $lesson['id']) {
+                                    $totalTests++;
+                                    // Nếu bạn vẫn cần in input:
+                                    // echo '<input type="hidden" name="test_id" value="' . htmlspecialchars($test['id']) . '">';
+                                }
+                            endforeach;
+                        }
+                    endforeach;
+                    ?>
                     <form action="/carts/create" method="POST">
                         <input type="hidden" id="final_price_input" name="final_price" value="<?= $subject['price'] ?>">
                         <input type="hidden" name="subject_id" value="<?= htmlspecialchars($subject['id']) ?>">
+                        <input type="hidden" name="number_test" value="<?= $totalTests ?>">
                         <input type="hidden" name="categories_id" value="<?= htmlspecialchars($subject['category_id']) ?>">
                         <input type="hidden" name="name" value="<?= htmlspecialchars($subject['name']) ?>">
                         <input type="hidden" name="image" value="<?= htmlspecialchars($subject['image']) ?>">

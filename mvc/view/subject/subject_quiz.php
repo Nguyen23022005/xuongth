@@ -1,3 +1,18 @@
+<?php
+$showForm = true;
+
+foreach ($answers as $answer) {
+    if (
+        $answer['user_id'] === $_SESSION['user']['id'] &&
+        $answer['test_id'] === $test['id'] &&
+        !empty($answer['question_id'])
+    ) {
+        $showForm = false;
+        break;
+    }
+}
+?>
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
@@ -7,46 +22,60 @@
                         <?= htmlspecialchars($test['title']) ?>
                     </h3>
 
-                    <form id="quiz-form" method="POST" action="/submitQuiz/<?= $test['id'] ?>">
-                        <div id="questions-container">
-                            <?php foreach ($questions as $index => $question): ?>
-                                <div class="mb-4">
-                                    <p class="fw-semibold mb-2"><?= ($index + 1) . ". " . htmlspecialchars($question['questions_text']) ?></p>
-                                    <?php foreach (['a', 'b', 'c', 'd'] as $option): ?>
-                                        <div class="form-check mb-1">
-                                            <input
-                                                class="form-check-input"
-                                                type="radio"
-                                                name="q<?= $index ?>"
-                                                value="<?= $option ?>"
-                                                data-question-id="<?= $question['id'] ?>"
-                                                id="q<?= $index ?>_<?= $option ?>"
-                                                <?= ($question['user_answer'] == $option) ? 'checked' : '' ?>>
-                                            <label class="form-check-label" for="q<?= $index ?>_<?= $option ?>">
-                                                <?= htmlspecialchars($question["option_$option"]) ?>
-                                            </label>
-                                        </div>
-                                    <?php endforeach; ?>
-                                    <input type="hidden" id="correct_q<?= $index ?>" value="<?= htmlspecialchars($question['correct_option']) ?>">
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                    <?php if ($showForm): ?>
+                        <form id="quiz-form" method="POST" action="/submitQuiz/<?= $test['id'] ?>">
+                            <div id="questions-container">
+                                <?php foreach ($lessons as $lesson): ?>
+                                    <?php if ($lesson['id'] === $test['lessons_id']): ?>
+                                        <?php foreach ($subjects as $subject): ?>
+                                            <?php if ($subject['id'] === $lesson['subject_id']): ?>
+                                                <input type="hidden" name="subject_id" value="<?= htmlspecialchars($subject['id']) ?>">
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="button" id="check-btn" class="btn btn-success btn-lg" onclick="checkAnswers()">✅ Kiểm tra kết quả</button>
-                            <button type="button" id="retry-btn" class="btn btn-warning btn-lg" style="display: none;" onclick="resetQuiz()">🔁 Làm lại</button>
-                            <button type="submit" id="submit-btn" class="btn btn-primary btn-lg" style="display: none;">📤 Gửi bài</button>
-                        </div>
+                                <?php foreach ($questions as $index => $question): ?>
+                                    <div class="mb-4">
+                                        <p class="fw-semibold mb-2"><?= ($index + 1) . ". " . htmlspecialchars($question['questions_text']) ?></p>
+                                        <?php foreach (['a', 'b', 'c', 'd'] as $option): ?>
+                                            <div class="form-check mb-1">
+                                                <input
+                                                    class="form-check-input"
+                                                    type="radio"
+                                                    name="q<?= $index ?>"
+                                                    value="<?= $option ?>"
+                                                    data-question-id="<?= $question['id'] ?>"
+                                                    id="q<?= $index ?>_<?= $option ?>"
+                                                    <?= ($question['user_answer'] == $option) ? 'checked' : '' ?>>
+                                                <label class="form-check-label" for="q<?= $index ?>_<?= $option ?>">
+                                                    <?= htmlspecialchars($question["option_$option"]) ?>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; ?>
+                                        <input type="hidden" id="correct_q<?= $index ?>" value="<?= htmlspecialchars($question['correct_option']) ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
 
-                        <div id="result" class="mt-4 text-center fw-bold fs-5 text-info"></div>
-                    </form>
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="button" id="check-btn" class="btn btn-success btn-lg" onclick="checkAnswers()">✅ Kiểm tra kết quả</button>
+                                <button type="button" id="retry-btn" class="btn btn-warning btn-lg" style="display: none;" onclick="resetQuiz()">🔁 Làm lại</button>
+                                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg" style="display: none;">📤 Gửi bài</button>
+                            </div>
+
+                            <div id="result" class="mt-4 text-center fw-bold fs-5 text-info"></div>
+                        </form>
+                    <?php else: ?>
+                        <p class="text-center text-success fs-5">✅ Bạn đã hoàn thành bài test này.</p>
+                    <?php endif; ?>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- JavaScript giữ nguyên -->
 <script>
     function checkAnswers() {
         let totalQuestions = <?= count($questions) ?>;
@@ -69,7 +98,7 @@
             }
         }
 
-        // Thêm input ẩn tại đây – chỉ 1 lần
+        // Chỉ thêm input nếu chưa có
         let existingInput = document.querySelector('input[name="user_answers"]');
         if (!existingInput) {
             let userAnswersInput = document.createElement("input");
@@ -89,7 +118,6 @@
             document.getElementById('retry-btn').style.display = 'block';
         }
     }
-
 
     function resetQuiz() {
         let totalQuestions = <?= count($questions) ?>;

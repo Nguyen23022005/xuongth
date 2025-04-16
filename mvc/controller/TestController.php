@@ -179,6 +179,7 @@ class TestController
     }
 
     // Xử lý bài kiểm tra và lưu câu trả lời của người dùng
+
     public function submitQuiz($test_id)
     {
         if (!isset($_SESSION['user_id'])) {
@@ -187,17 +188,11 @@ class TestController
         }
 
         $user_id = $_SESSION['user_id'];
-        $user_answers = json_decode($_POST['user_answers'], true);
+        $answers = '1';
+        $subject_id = $_POST['subject_id'];
+        $question_id = '1';
 
-        // Kiểm tra nếu câu trả lời có question_id hợp lệ
-        foreach ($user_answers as $answer) {
-            $question_id = $answer['question_id'];
-            if (!$this->testModel->isValidQuestionId($question_id)) {
-                throw new Exception("Question ID không hợp lệ.");
-            }
-
-            $this->testModel->saveUserAnswer($user_id, $test_id, $question_id, $answer['selected_option']);
-        }
+            $this->testModel->saveUserAnswer($user_id,$subject_id, $test_id, $question_id, $answers);
 
         // Chuyển hướng đến trang kết quả
         header("Location: /subjects/quiz/$test_id");

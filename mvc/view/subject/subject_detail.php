@@ -69,19 +69,23 @@
         <div class="col-lg-4">
             <?php if (!empty($lessons)): ?>
                 <div class="mb-4">
-                    <div class="mb-2 fw-semibold">Tiến độ khóa học: <span class="text-success">80%</span></div>
-                    <div class="progress" style="height: 20px;">
-                        <div class="progress-bar bg-success" style="width: 80%;"></div>
-                    </div>
-
-                    <form action="/create/sendemail" method="POST" class="mt-3">
-                        <input type="hidden" name="name" value="<?= htmlspecialchars($subject['name']) ?>">
-                        <input type="hidden" name="image" value="<?= htmlspecialchars($subject['image']) ?>">
-                        <input type="hidden" name="sku" value="<?= htmlspecialchars($subject['sku']) ?>">
-                        <button type="submit" class="btn btn-outline-primary w-100">
-                            🎓 Nhận Chứng Chỉ
-                        </button>
-                    </form>
+                    <?php foreach ($progresses as $progress): if ($subject['id'] === $progress['subject_id'] && $progress['user_id'] === $_SESSION['user']['id']) { ?>
+                            <div class="mb-2 fw-semibold">Tiến độ khóa học: <span class="text-success"><?= htmlspecialchars(($progress['number_submit'] / $progress['number_test']) * 100) ?> %</span></div>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar bg-success" style="width:<?= htmlspecialchars(($progress['number_submit'] / $progress['number_test']) * 100) ?>%;"></div>
+                            </div>
+                            <?php if(($progress['number_submit'] / $progress['number_test']) * 100 === 100){?>
+                            <form action="/create/sendemail" method="POST" class="mt-3">
+                                <input type="hidden" name="name" value="<?= htmlspecialchars($subject['name']) ?>">
+                                <input type="hidden" name="image" value="<?= htmlspecialchars($subject['image']) ?>">
+                                <input type="hidden" name="sku" value="<?= htmlspecialchars($subject['sku']) ?>">
+                                <button type="submit" class="btn btn-outline-primary w-100">
+                                    🎓 Nhận Chứng Chỉ
+                                </button>
+                            </form>
+                            <?php }?>
+                    <?php }
+                    endforeach; ?>
                 </div>
 
                 <!-- Accordion danh sách bài -->

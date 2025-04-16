@@ -54,8 +54,8 @@
       <nav id="navmenu" class="navmenu">
         <ul class="navbar">
           <li><a href="/" style="text-decoration: none;">Trang Chủ<br></a></li>
+          <li><a href="/course" style="text-decoration: none;">Khóa Học Của Bạn</a></li>
           <li><a href="/index1" style="text-decoration: none;">Tin tức</a></li>
-          <li><a href="#" style="text-decoration: none;">Trainers</a></li>
           <li><a href="#" style="text-decoration: none;">Events</a></li>
           <li><a href="#" style="text-decoration: none;">Pricing</a></li>
           <li class="nav-item dropdown">

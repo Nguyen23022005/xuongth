@@ -63,15 +63,49 @@ class TestModel
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // public function createTest($lessons_id, $title)
+    // {
+    //     $query = "INSERT INTO tests (lessons_id, title) VALUES (:lessons_id, :title)";
+    //     $query = "INSERT INTO progresses";
+    //     $stmt = $this->conn->prepare($query);
+    //     $stmt->bindParam(':lessons_id', $lessons_id);
+    //     $stmt->bindParam(':title', $title);
+    //     return $stmt->execute();
+    // }
+
     public function createTest($lessons_id, $title)
-    {
-        $query = "INSERT INTO tests (lessons_id, title) VALUES (:lessons_id, :title)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':lessons_id', $lessons_id);
-        $stmt->bindParam(':title', $title);
-        return $stmt->execute();
+{
+    try {
+        // Bắt đầu transaction
+        $this->conn->beginTransaction();
+
+        // 1. Thêm bài test mới vào bảng tests
+        $query1 = "INSERT INTO tests (lessons_id, title) VALUES (:lessons_id, :title)";
+        $stmt1 = $this->conn->prepare($query1);
+        $stmt1->bindParam(':lessons_id', $lessons_id);
+        $stmt1->bindParam(':title', $title);
+        $stmt1->execute();
+
+        // 2. Cập nhật tăng number_test trong bảng progresses
+        $query2 = "UPDATE progresses SET number_test = number_test + 1 WHERE subject_id = (
+                        SELECT subject_id FROM lessons WHERE id = :lessons_id
+                    )";
+        $stmt2 = $this->conn->prepare($query2);
+        $stmt2->bindParam(':lessons_id', $lessons_id);
+        $stmt2->execute();
+
+        // Hoàn tất transaction
+        $this->conn->commit();
+        return true;
+    } catch (PDOException $e) {
+        // Rollback nếu có lỗi
+        $this->conn->rollBack();
+        error_log("Create test failed: " . $e->getMessage());
+        return false;
     }
-    public function createQuestions($tests_id, $questions_text,$option_a,$option_b,$option_c,$option_d,$correct_option)
+}
+
+    public function createQuestions($tests_id, $questions_text, $option_a, $option_b, $option_c, $option_d, $correct_option)
     {
         $query = "INSERT INTO questions (tests_id, questions_text, option_a,option_b, option_c, option_d, correct_option) VALUES (:tests_id, :questions_text, :option_a, :option_b, :option_c, :option_d, :correct_option)";
         $stmt = $this->conn->prepare($query);
@@ -95,7 +129,7 @@ class TestModel
         return $stmt->execute();
     }
 
-    public function updateQuestions($id,$tests_id, $questions_text,$option_a,$option_b,$option_c,$option_d,$corect_option)
+    public function updateQuestions($id, $tests_id, $questions_text, $option_a, $option_b, $option_c, $option_d, $corect_option)
     {
         $query = "UPDATE questions SET tests_id = :tests_id, questions_text = :questions_text, option_a = :option_a, option_b = :option_b, option_c = :option_c, option_d = :option_d, corect_option = :corect_option WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -125,7 +159,7 @@ class TestModel
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
-    
+
     public function getQuestionsForUser($test_id, $user_id)
     {
         $query = "
@@ -156,18 +190,35 @@ class TestModel
         return $stmt->fetchColumn() > 0;
     }
 
-    public function saveUserAnswer($user_id, $test_id, $question_id, $selected_option)
+    public function saveUserAnswer($user_id, $subject_id, $test_id, $question_id, $selected_option)
     {
-        if (!$this->isValidQuestionId($question_id)) {
-            throw new Exception("Question ID không hợp lệ.");
-        }
+        // if (!$this->isValidQuestionId($question_id)) {
+        //     throw new Exception("Question ID không hợp lệ.");
+        // }
 
-        $query = "INSERT INTO user_answers (user_id, test_id, question_id, selected_option) VALUES (:user_id, :test_id, :question_id, :selected_option)";
+        // Thêm câu trả lời vào bảng user_answers
+        $query = "INSERT INTO user_answers (user_id, subject_id, test_id, question_id, selected_option) 
+              VALUES (:user_id, :subject_id, :test_id, :question_id, :selected_option)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
         $stmt->bindParam(':test_id', $test_id, PDO::PARAM_INT);
         $stmt->bindParam(':question_id', $question_id, PDO::PARAM_INT);
         $stmt->bindParam(':selected_option', $selected_option);
-        return $stmt->execute();
+
+        $success = $stmt->execute();
+
+        // Nếu thêm câu trả lời thành công, cập nhật progress
+        if ($success) {
+            $updateQuery = "UPDATE progresses 
+                        SET number_submit = number_submit + 1 
+                        WHERE user_id = :user_id AND subject_id = :subject_id";
+            $updateStmt = $this->conn->prepare($updateQuery);
+            $updateStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $updateStmt->bindParam(':subject_id', $subject_id, PDO::PARAM_INT);
+            $updateStmt->execute();
+        }
+
+        return $success;
     }
 }
