@@ -25,19 +25,6 @@
     border-radius: 0 0 15px 15px;
   }
 
-  nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    transition: 0.3s;
-  }
-
-  nav a:hover {
-    background: #2575fc;
-    border-radius: 5px;
-  }
 
   /* Layout chính */
   .main1 {
@@ -45,7 +32,8 @@
     max-width: 1000px;
     margin: 20px auto;
     padding: 0 20px;
-    gap: 20px; /* Khoảng cách giữa content và sidebar */
+    gap: 20px;
+    /* Khoảng cách giữa content và sidebar */
   }
 
   .container {
@@ -146,78 +134,74 @@
     .post img {
       max-width: 100%;
     }
-  
+
   }
 </style>
-</head>
+<header class="hh">
+  <h1>Trang Tin Tức</h1>
+  <p>Chia sẻ các khoá học kiến thức</p>
+</header>
 
-<body>
-  <header class="hh">
-    <h1>Trang Tin Tức</h1>
-    <p>Chia sẻ các khoá học kiến thức</p>
-  </header>
+<div class="main1">
+  <div class="container">
 
-  <div class="main1">
-    <div class="container">
+    <!-- FORM TÌM KIẾM -->
+    <form method="get" action="" style="margin-bottom: 20px;">
+      <input type="text" name="keyword" placeholder="Tìm kiếm bài viết..." value="<?= htmlspecialchars($keyword ?? '') ?>"
+        style="padding: 8px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+      <button type="submit"
+        style="padding: 8px 12px; background: #6a11cb; color: white; border: none; border-radius: 5px;">
+        Tìm kiếm
+      </button>
+    </form>
 
-      <!-- FORM TÌM KIẾM -->
-      <form method="get" action="" style="margin-bottom: 20px;">
-        <input type="text" name="keyword" placeholder="Tìm kiếm bài viết..." value="<?= htmlspecialchars($keyword ?? '') ?>"
-               style="padding: 8px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
-        <button type="submit"
-                style="padding: 8px 12px; background: #6a11cb; color: white; border: none; border-radius: 5px;">
-          Tìm kiếm
-        </button>
-      </form>
-
-      <!-- DANH SÁCH BÀI VIẾT -->
-      <?php if (!empty($blog)): ?>
-        <?php foreach ($blog as $post): ?>
-          <div class="post" style="display: flex; margin-bottom: 30px;">
-            <div style="flex: 1;">
-              <?php if (!empty($post['image'])): ?>
-                <img src="<?= htmlspecialchars($post['image']); ?>" alt="Image for <?= htmlspecialchars($post['title']); ?>" style="width: 100%; max-width: 250px; border-radius: 10px;">
-              <?php endif; ?>
-            </div>
-            <div style="flex: 2; padding-left: 20px;">
-              <h2><?= htmlspecialchars($post['title']) ?></h2>
-              <p style="font-size: 14px; color: gray;">
-                📅 <?= date('D d/m/Y', strtotime($post['created_at'])) ?> &nbsp; ⏱ 6 phút đọc
-              </p>
-              <a href="/blogg/<?= $post['id'] ?>" style="color: #6a11cb; font-weight: bold;">Đọc tiếp</a>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <p>Không tìm thấy bài viết nào.</p>
-      <?php endif; ?>
-
-      <!-- PHÂN TRANG -->
-      <?php if (!empty($totalPages) && $totalPages > 1): ?>
-        <div style="text-align: center; margin-top: 30px;">
-          <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-            <a href="?page=<?= $i ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>"
-               style="margin: 0 5px; padding: 8px 12px; text-decoration: none; border-radius: 5px;
-                      <?= $currentPage == $i ? 'background: #6a11cb; color: white; font-weight: bold;' : 'background: #eee; color: #333;' ?>">
-              <?= $i ?>
-            </a>
-          <?php endfor; ?>
-        </div>
-      <?php endif; ?>
-    </div>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <h3>Tin Mới Nhất</h3>
-      <ul>
-        <?php foreach ($blog as $post): ?>
-          <li style="display: flex; margin-bottom: 15px;">
+    <!-- DANH SÁCH BÀI VIẾT -->
+    <?php if (!empty($blog)): ?>
+      <?php foreach ($blog as $post): ?>
+        <div class="post" style="display: flex; margin-bottom: 30px;">
+          <div style="flex: 1;">
             <?php if (!empty($post['image'])): ?>
-              <img src="<?= htmlspecialchars($post['image']); ?>" alt="Image for <?= htmlspecialchars($post['title']); ?>" style="width: 80px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
+              <img src="<?= htmlspecialchars($post['image']); ?>" alt="Image for <?= htmlspecialchars($post['title']); ?>" style="width: 100%; max-width: 250px; border-radius: 10px;">
             <?php endif; ?>
-            <a href="/blogg/<?= $post['id'] ?>" style="flex: 1; font-size: 14px;"><?= htmlspecialchars($post['title']) ?></a>
-          </li>
-        <?php endforeach; ?>
-      </ul>
-    </aside>
+          </div>
+          <div style="flex: 2; padding-left: 20px;">
+            <h2><?= htmlspecialchars($post['title']) ?></h2>
+            <p style="font-size: 14px; color: gray;">
+              📅 <?= date('D d/m/Y', strtotime($post['created_at'])) ?> &nbsp; ⏱ 6 phút đọc
+            </p>
+            <a href="/blogg/<?= $post['id'] ?>" style="color: #6a11cb; font-weight: bold;">Đọc tiếp</a>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p>Không tìm thấy bài viết nào.</p>
+    <?php endif; ?>
+
+    <!-- PHÂN TRANG -->
+    <?php if (!empty($totalPages) && $totalPages > 1): ?>
+      <div style="text-align: center; margin-top: 30px;">
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+          <a href="?page=<?= $i ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>"
+            style="margin: 0 5px; padding: 8px 12px; text-decoration: none; border-radius: 5px;
+                      <?= $currentPage == $i ? 'background: #6a11cb; color: white; font-weight: bold;' : 'background: #eee; color: #333;' ?>">
+            <?= $i ?>
+          </a>
+        <?php endfor; ?>
+      </div>
+    <?php endif; ?>
   </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3>Tin Mới Nhất</h3>
+    <ul>
+      <?php foreach ($blog as $post): ?>
+        <li style="display: flex; margin-bottom: 15px;">
+          <?php if (!empty($post['image'])): ?>
+            <img src="<?= htmlspecialchars($post['image']); ?>" alt="Image for <?= htmlspecialchars($post['title']); ?>" style="width: 80px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 10px;">
+          <?php endif; ?>
+          <a href="/blogg/<?= $post['id'] ?>" style="flex: 1; font-size: 14px;"><?= htmlspecialchars($post['title']) ?></a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  </aside>

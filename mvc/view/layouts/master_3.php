@@ -45,7 +45,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto" style="text-decoration: none;">
+      <a href="/" class="logo d-flex align-items-center me-auto" style="text-decoration: none;">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">Mentor</h1>
@@ -56,8 +56,6 @@
           <li><a href="/" style="text-decoration: none;">Trang Chủ<br></a></li>
           <li><a href="/course" style="text-decoration: none;">Khóa Học Của Bạn</a></li>
           <li><a href="/index1" style="text-decoration: none;">Tin tức</a></li>
-          <li><a href="#" style="text-decoration: none;">Events</a></li>
-          <li><a href="#" style="text-decoration: none;">Pricing</a></li>
           <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user"></i> Tài khoản
