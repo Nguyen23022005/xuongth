@@ -70,4 +70,41 @@ class BlogModel {
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+    //tìm kiếm bài viết
+    public function searchBlog($keyword, $limit, $offset) {
+        $query = "SELECT * FROM blog WHERE title LIKE :keyword OR content LIKE :keyword ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        $stmt = $this->conn->prepare($query);
+        
+        $keyword = "%$keyword%";
+        $stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function countSearchResults($keyword) {
+        $query = "SELECT COUNT(*) as total FROM blog WHERE title LIKE :keyword OR content LIKE :keyword";
+        $stmt = $this->conn->prepare($query);
+        $keyword = "%$keyword%";
+        $stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+    
+    public function countAllBlogs() {
+        $query = "SELECT COUNT(*) as total FROM blog";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+    public function paginationBlog($limit, $offset) {
+        $query = "SELECT * FROM blog ORDER BY id DESC LIMIT :limit OFFSET :offset";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

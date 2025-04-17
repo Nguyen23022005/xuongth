@@ -29,14 +29,33 @@ class BlogController
     public function index1()
     {
         try {
-            $blog = $this->blogModel->getAllBlogs(); // Lấy tất cả bài
-            renderView("view/blog/blog_list.php", compact('blog'), "list blog");
+            $keyword = $_GET['keyword'] ?? null;
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $limit = 3; // Số bài viết trên mỗi trang
+            $offset = ($page - 1) * $limit;
+    
+            if ($keyword) {
+                $blogs = $this->blogModel->searchBlog($keyword, $limit, $offset);
+                $totalBlogs = $this->blogModel->countSearchResults($keyword);
+            } else {
+                $blogs = $this->blogModel->paginationBlog($limit, $offset);
+                $totalBlogs = $this->blogModel->countAllBlogs();
+            }
+    
+            $totalPages = ceil($totalBlogs / $limit);
+    
+            renderView("view/blog/blog_list.php", [
+                'blog' => $blogs,
+                'totalPages' => $totalPages,
+                'currentPage' => $page,
+                'keyword' => $keyword
+            ], "list blog");
+    
         } catch (Exception $e) {
             $errors = ["Error fetching blog posts: " . $e->getMessage()];
             renderView("view/blog/blog_list.php", compact('errors'), "list blog");
         }
     }
-
     public function list($id)
     {
         try {
