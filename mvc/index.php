@@ -83,10 +83,10 @@ $router->addRoute("/admin_profile/edit/{id}", [$userController, "edit_admin"]);
 // $router->addRoute("/profile", [$userController, "profile"], ['isUser'], ['isQuanly']);
 
 //Danh mục khóa học
-$router->addRoute("/categories", [$categoryController, "index"], ['isAdmin']);
-$router->addRoute("/categories/create", [$categoryController, "create"], ['isAdmin']);
-$router->addRoute("/categories/edit/{id}", [$categoryController, "edit"], ['isAdmin']);
-$router->addRoute("/categories/delete/{id}", [$categoryController, "delete"], ['isAdmin']);
+$router->addRoute("/categories", [$categoryController, "index"], ['isQuanly']);
+$router->addRoute("/categories/create", [$categoryController, "create"], ['isQuanly']);
+$router->addRoute("/categories/edit/{id}", [$categoryController, "edit"], ['isQuanly']);
+$router->addRoute("/categories/delete/{id}", [$categoryController, "delete"], ['isQuanly']);
 
 //Danh mục môn học
 $router->addRoute("/subjects", [$subjectsController, "index"], ['isAdmin']);

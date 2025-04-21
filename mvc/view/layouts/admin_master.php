@@ -59,8 +59,9 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/categories">Quản Lý Danh Mục</a>
                                 <a class="nav-link" href="/users_admin">Quản Lý Người Dùng</a>
-                                <a class="nav-link" href="/blog">Quản Lý tin tức</a> 
+                                <a class="nav-link" href="/blog">Quản Lý tin tức</a>
                                 <a class="nav-link" href="/total_admin">Tổng Doanh Thu</a>
                             </nav>
                         </div>
@@ -77,7 +78,7 @@
                                 </a>
                                 <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/">Trang Chủ</a>
+                                        <a class="nav-link" href="/">Trang Chủ</a>
                                         <!-- <a class="nav-link" href="login.html">Login</a>
                                         <a class="nav-link" href="register.html">Register</a>
                                         <a class="nav-link" href="password.html">Forgot Password</a> -->
@@ -161,6 +162,6 @@
     <script src="/public/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="/public/js/datatables-simple-demo.js"></script>
-    </body>
+</body>
 
 </html>

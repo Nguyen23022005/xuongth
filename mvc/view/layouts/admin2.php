@@ -59,10 +59,8 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="/subjects">Quản Lý Môn Học</a>
-                                <a class="nav-link" href="/categories">Quản Lý Danh Mục</a>
+                                <a class="nav-link" href="/subjects">Quản Lý Môn Học</a>                               
                                 <a class="nav-link" href="/discounts">Quản Lý Mã Giảm Giá</a>
-                                <a class="nav-link" href="/comments">Quản Lý Comment</a>
                                 <a class="nav-link" href="/totals">Tổng Doanh Thu</a>
                                 <a class="nav-link" href="/admin_profile/edit/<?= $_SESSION['user']['id']?>">Hồ Sơ</a>
                             </nav>

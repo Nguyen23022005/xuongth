@@ -15,7 +15,7 @@ class CategoryController
     {
         $categories = $this->categoryModel->getAllcategories();
         //compact: gom bien dien thanh array
-        renderAdminView("view/category/category_list.php", compact('categories'), "Category List");
+        renderMasterView("view/category/category_list.php", compact('categories'), "Category List");
     }
 
     public function create()
@@ -38,10 +38,10 @@ class CategoryController
             } else {
                 // Nếu dữ liệu không hợp lệ, hiển thị lỗi
                 $errors = $validate->getErrors();
-                renderAdminView("view/category/category_create.php", compact('errors'), "Create category");
+                renderMasterView("view/category/category_create.php", compact('errors'), "Create category");
             }
         } else {
-            renderAdminView("view/category/category_create.php", [], "Create category");
+            renderMasterView("view/category/category_create.php", [], "Create category");
         }
     }
 
@@ -54,7 +54,7 @@ class CategoryController
             header("Location: /categories");
         } else {
             $category = $this->categoryModel->getCategoryById($id);
-            renderAdminView("view/category/category_edit.php", compact('category'), "Edit Category");
+            renderMasterView("view/category/category_edit.php", compact('category'), "Edit Category");
         }
     }
     
