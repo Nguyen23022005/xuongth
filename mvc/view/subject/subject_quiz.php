@@ -12,16 +12,22 @@ foreach ($answers as $answer) {
     }
 }
 ?>
-
-<div class="container py-5">
+<div class="page-title" data-aos="fade">
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li class="current">
+                    <h4><?= htmlspecialchars($test['title']) ?></h4>
+                </li>
+            </ol>
+        </div>
+    </nav>
+</div><!-- End Page Title -->
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
+        <div class="col-md-12 col-lg-12">
             <div class="card shadow-lg rounded-4 border-0">
                 <div class="card-body p-4">
-                    <h3 class="card-title text-center mb-4 text-primary fw-bold">
-                        <?= htmlspecialchars($test['title']) ?>
-                    </h3>
-
                     <?php if ($showForm): ?>
                         <form id="quiz-form" method="POST" action="/submitQuiz/<?= $test['id'] ?>">
                             <div id="questions-container">
@@ -55,19 +61,24 @@ foreach ($answers as $answer) {
                                         <?php endforeach; ?>
                                         <input type="hidden" id="correct_q<?= $index ?>" value="<?= htmlspecialchars($question['correct_option']) ?>">
                                     </div>
+                                    <hr>
                                 <?php endforeach; ?>
                             </div>
-
-                            <div class="d-grid gap-2 mt-4">
-                                <button type="button" id="check-btn" class="btn btn-success btn-lg" onclick="checkAnswers()">✅ Kiểm tra kết quả</button>
-                                <button type="button" id="retry-btn" class="btn btn-warning btn-lg" style="display: none;" onclick="resetQuiz()">🔁 Làm lại</button>
-                                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg" style="display: none;">📤 Gửi bài</button>
+                            <div class="d-grid gap-2 mt-4" style="width:10%;">
+                                <button type="button" id="check-btn" class="btn btn-success btn-lg" onclick="checkAnswers()"> Kiểm Tra </button>
+                                <button type="button" id="retry-btn" class="btn btn-warning btn-lg" style="display: none;" onclick="resetQuiz()"> Làm Lại</button>
+                                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg" style="display: none;">Nộp Bài</button>
                             </div>
 
-                            <div id="result" class="mt-4 text-center fw-bold fs-5 text-info"></div>
+                            <div id="result" class="mt-4 fs-5 " style="color:#5FCF80"></div>
                         </form>
                     <?php else: ?>
+                        <br><br><br>
                         <p class="text-center text-success fs-5">✅ Bạn đã hoàn thành bài test này.</p>
+                        <div class="text-center d-flex justify-content-center gap-3">
+                            <a href="/" class="btn btn-outline-success">Quay Lại</a>
+                        </div>
+                        <br><br><br>
                     <?php endif; ?>
 
                 </div>
@@ -108,7 +119,7 @@ foreach ($answers as $answer) {
             document.getElementById('quiz-form').appendChild(userAnswersInput);
         }
 
-        let resultText = `🎯 Bạn đã trả lời đúng ${score} / ${totalQuestions} câu.`;
+        let resultText = `Bạn đã trả lời đúng ${score} / ${totalQuestions} câu.`;
         document.getElementById('result').innerText = resultText;
 
         document.getElementById('check-btn').style.display = 'none';

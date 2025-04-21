@@ -1,4 +1,4 @@
-<h1>Create Question</h1>
+<h1>Tạo Câu Hỏi Trắc Nghiệm</h1>
 <div class="row">
     <div class="col-md-6">
         <form action="/questions/create" method="POST">

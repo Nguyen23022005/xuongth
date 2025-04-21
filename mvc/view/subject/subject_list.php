@@ -9,10 +9,9 @@
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        DataTable Example
+        DANH SÁCH KHÓA HỌC
     </div>
     <div class="card-body">
-        <h2 class="mb-4 text-center"> DANH SÁCH KHÓA HỌC </h2>
         <table id="datatablesSimple">
             <a href="/subjects/create" class="btn btn-success mb-3">
                 <i class="fas fa-plus-circle"></i> Khóa Học Mới
@@ -23,7 +22,6 @@
                     <th>Tên</th>
                     <th>Ảnh</th>
                     <th>Giá</th>
-                    <th>Tình Trạng</th>
                     <th>Hành Động</th>
                 </tr>
             </thead>
@@ -33,7 +31,6 @@
                     <th>Tên</th>
                     <th>Ảnh</th>
                     <th>Giá</th>
-                    <th>Tình Trạng</th>
                     <th>Hành Động</th>
                 </tr>
             </tfoot>
@@ -46,14 +43,7 @@
                                 <img src="<?= htmlspecialchars($subject['image']) ?>" alt="image"
                                     class="rounded shadow-sm" width="60" height="60">
                             </td>
-                            <td class="text-center text-success fw-bold">$<?= htmlspecialchars(number_format($subject['price'], 2)) ?></td>
-                            <td class="text-center">
-                                <?php if ($subject['status'] === 'Active'): ?>
-                                    <span class="badge bg-success">Active</span>
-                                <?php else: ?>
-                                    <span class="badge bg-danger">Inactive</span>
-                                <?php endif; ?>
-                            </td>
+                            <td class="text-center text-success fw-bold"><?= htmlspecialchars(number_format($subject['price'], 2)) ?> VNĐ</td>
                             <td class="text-center">
                                 <a href="/subjects/user/<?= $subject['id'] ?>" class="btn btn-info btn-sm">
                                     <i class="fas fa-eye"></i>

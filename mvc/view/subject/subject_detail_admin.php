@@ -2,18 +2,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <h3 class="">KHÓA HỌC</h3>
             <div class="card shadow-sm border-0">
+                <h3 class="text-muted mb-2">KHÓA HỌC</h3>
                 <img src="<?= htmlspecialchars($subjects['image']) ?>" alt="image" class="card-img-top rounded-top" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title fw-bold text-primary"><?= htmlspecialchars($subjects['name']) ?></h5>
-                    <p class="text-muted mb-2">SKU: <span class="fw-semibold"><?= htmlspecialchars($subjects['sku']) ?></span></p>
-                    <p class="text-success fw-bold">$<?= htmlspecialchars(number_format($subjects['price'], 2)) ?></p>
+                    <p class="text-muted mb-2">Mã Khóa Học: <span class="fw-semibold"><?= htmlspecialchars($subjects['sku']) ?></span></p>
+                    <p class="text-success fw-bold"><?= htmlspecialchars(number_format($subjects['price'], 2)) ?> VNĐ</p>
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <h3 class="">DANH SÁCH BÀI HỌC</h3>
             <?php if (!empty($_SESSION['success_message'])): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fas fa-check-circle"></i> <?= $_SESSION['success_message']; ?>
@@ -24,7 +23,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    DataTable Example
+                    DANH SÁCH BÀI HỌC
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
@@ -60,14 +59,14 @@
                                         </td>
                                         <td><?= htmlspecialchars($lesson['status']) ?></td>
                                         <td>
-                                            <a href="/lessons/edit/<?= $lesson['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                                            <a href="/lessons/edit/<?= $lesson['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
                                             <form action="/lessons/delete/<?= $lesson['id']; ?>" method="POST" style="display:inline;">
                                                 <button type="submit" class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Are you sure you want to delete this lesson?');">
-                                                    Delete
+                                                    Xóa
                                                 </button>
                                             </form>
-                                            <a href="/tests/setup/<?= $lesson['id'] ?>" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> Test</a>
+                                            <a href="/tests/setup/<?= $lesson['id'] ?>" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> Quiz </a>
                                         </td>
                                     </tr>
                             <?php }

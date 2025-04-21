@@ -95,100 +95,121 @@
       <h2 class="fw-bold">Khóa Học Phổ Biến</h2>
       <p class="text-muted">Chọn một khóa học phù hợp với bạn</p>
     </div>
-
-    <div class="row g-4">
-      <?php foreach ($subjects as $subject): ?>
-        <div class="col-lg-4 col-md-6 course-item">
-          <div class="card shadow-sm border-0" data-aos="zoom-in" data-aos-delay="100">
-            <?php
-            // Initialize a flag to check if the user has already registered for the course
-            $isRegistered = false;
-            $isCompleted = false;
-
-            // Loop through user_subjects to check the registration status
-            foreach ($user_subjects as $user_subject) {
-              if ($subject['id'] === $user_subject['subject_id'] && $user_subject['user_id'] === $_SESSION['user']['id']) {
-                if ($user_subject['status'] === "Đã Tham Gia") {
-                  $isCompleted = true;
-                } else {
-                  $isRegistered = true;
-                }
-                break; // No need to continue checking once we find the user subject
-              }
-            }
-
-            // Show HTML based on the registration status
-            ?>
-
-            <?php if ($isCompleted): ?>
+    <?php if (empty($_SESSION['user'])) { ?>
+      <div class="row g-4">
+        <?php foreach ($subjects as $subject): ?>
+          <div class="col-lg-4 col-md-6 course-item">
+            <div class="card shadow-sm border-0" data-aos="zoom-in" data-aos-delay="100">
               <a href="/subjects/<?= $subject['id'] ?>" class="text-decoration-none">
                 <div class="image-container" style="height: 200px; overflow: hidden;">
                   <img src="<?= !empty($subject['image']) ? htmlspecialchars($subject['image']) : 'https://via.placeholder.com/300x200' ?>" class="card-img-top rounded" alt="image" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
               </a>
-            <?php elseif ($isRegistered): ?>
-              <a href="/subjects/register/<?= $subject['id'] ?>" class="text-decoration-none">
-                <div class="image-container" style="height: 200px; overflow: hidden;">
-                  <img src="<?= !empty($subject['image']) ? htmlspecialchars($subject['image']) : 'https://via.placeholder.com/300x200' ?>" class="card-img-top rounded" alt="image" style="width: 100%; height: 100%; object-fit: cover;">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/subjects/<?= $subject['id'] ?>" class="text-dark fw-bold" style="text-decoration: none;"> <?= htmlspecialchars($subject['name']); ?> </a>
+                </h5>
+                <p class="card-text text-muted"> <?= htmlspecialchars($subject['description'] ?? 'Không có mô tả.'); ?> </p>
+                <div class="trainer-rank d-flex align-items-center" style=" font-weight: bold;color: #5FCF80;">
+                  <i class="bi bi-person user-icon"></i>&nbsp;<?= $subject['user_quantity'] ?>
+                  &nbsp;&nbsp;
                 </div>
-              </a>
-            <?php else: ?>
-              <a href="/subjects/register/<?= $subject['id'] ?>" class="text-decoration-none">
-                <div class="image-container" style="height: 200px; overflow: hidden;">
-                  <img src="<?= !empty($subject['image']) ? htmlspecialchars($subject['image']) : 'https://via.placeholder.com/300x200' ?>" class="card-img-top rounded" alt="image" style="width: 100%; height: 100%; object-fit: cover;">
+                <br>
+                <div class="d-flex justify-content-between align-items-center">
+                  <a href="/carts/checkout/<?= $subject['id'] ?>" class="btn_2">Tham Gia Khóa Học</a>
+                  <span class="text-secondary fw-bold"> <?= number_format($subject['price'], 0); ?> VND</span>
                 </div>
-              </a>
-            <?php endif; ?>
-
-            <div class="card-body">
-              <h5 class="card-title">
-                <a href="/subjects/<?= $subject['id'] ?>" class="text-dark fw-bold" style="text-decoration: none;"> <?= htmlspecialchars($subject['name']); ?> </a>
-              </h5>
-              <p class="card-text text-muted"> <?= htmlspecialchars($subject['description'] ?? 'Không có mô tả.'); ?> </p>
-              <div class="trainer-rank d-flex align-items-center" style=" font-weight: bold;color: #5FCF80;">
-                <i class="bi bi-person user-icon"></i>&nbsp;<?= $subject['user_quantity'] ?>
-                &nbsp;&nbsp;
               </div>
-              <br>
-              <div class="d-flex justify-content-between align-items-center">
-                <?php
-                // Initialize a flag to check if the user has already registered for the course
-                $isRegistered = false;
-                $isCompleted = false;
-
-                // Loop through user_subjects to check the registration status
-                foreach ($user_subjects as $user_subject) {
-                  if ($subject['id'] === $user_subject['subject_id'] && $user_subject['user_id'] === $_SESSION['user']['id']) {
-                    if ($user_subject['status'] === "Đã Tham Gia") {
-                      $isCompleted = true;
-                    } else {
-                      $isRegistered = true;
-                    }
-                    break; // No need to continue checking once we find the user subject
-                  }
-                }
-
-                // Show button based on the registration status
-                if ($isCompleted) {
-                  // If user has completed the course, show the "View Course" button or any relevant message
-                  echo '<a href="/subjects/' . $subject['id'] . '" class="btn_2">Xem Khóa Học</a>';
-                } elseif ($isRegistered) {
-                  // If user is registered but not yet completed, show "Tham Gia Khóa Học"
-                  echo '<a href="/carts/checkout/' . $subject['id'] . '" class="btn_2">Tiếp Tục Tham Gia</a>';
-                } else {
-                  // If user has not registered yet, show "Tham Gia Khóa Học"
-                  echo '<a href="/carts/checkout/' . $subject['id'] . '" class="btn_2">Tham Gia Khóa Học</a>';
-                }
-                ?>
-                <span class="text-secondary fw-bold"> <?= number_format($subject['price'], 0); ?> VND</span>
-              </div>
-
-
             </div>
           </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
+        <?php endforeach; ?>
+      </div>
+    <?php } else { ?>
+      <div class="row g-4">
+        <?php foreach ($subjects as $subject): ?>
+          <div class="col-lg-4 col-md-6 course-item">
+            <div class="card shadow-sm border-0" data-aos="zoom-in" data-aos-delay="100">
+              <?php
+              // Initialize a flag to check if the user has already registered for the course
+              $isRegistered = false;
+              $isCompleted = false;
+
+              // Loop through user_subjects to check the registration status
+              foreach ($user_subjects as $user_subject) {
+                if ($subject['id'] === $user_subject['subject_id'] && $user_subject['user_id'] === $_SESSION['user']['id']) {
+                  if ($user_subject['status'] === "Đã Tham Gia") {
+                    $isCompleted = true;
+                  } else {
+                    $isRegistered = true;
+                  }
+                  break; // No need to continue checking once we find the user subject
+                }
+              }
+              ?>
+
+              <?php if ($isCompleted): ?>
+                <a href="/subjects/<?= $subject['id'] ?>" class="text-decoration-none">
+                  <div class="image-container" style="height: 200px; overflow: hidden;">
+                    <img src="<?= !empty($subject['image']) ? htmlspecialchars($subject['image']) : 'https://via.placeholder.com/300x200' ?>" class="card-img-top rounded" alt="image" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                </a>
+              <?php elseif ($isRegistered): ?>
+                <a href="/subjects/register/<?= $subject['id'] ?>" class="text-decoration-none">
+                  <div class="image-container" style="height: 200px; overflow: hidden;">
+                    <img src="<?= !empty($subject['image']) ? htmlspecialchars($subject['image']) : 'https://via.placeholder.com/300x200' ?>" class="card-img-top rounded" alt="image" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                </a>
+              <?php else: ?>
+                <a href="/subjects/register/<?= $subject['id'] ?>" class="text-decoration-none">
+                  <div class="image-container" style="height: 200px; overflow: hidden;">
+                    <img src="<?= !empty($subject['image']) ? htmlspecialchars($subject['image']) : 'https://via.placeholder.com/300x200' ?>" class="card-img-top rounded" alt="image" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                </a>
+              <?php endif; ?>
+
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="/subjects/<?= $subject['id'] ?>" class="text-dark fw-bold" style="text-decoration: none;"> <?= htmlspecialchars($subject['name']); ?> </a>
+                </h5>
+                <p class="card-text text-muted"> <?= htmlspecialchars($subject['description'] ?? 'Không có mô tả.'); ?> </p>
+                <div class="trainer-rank d-flex align-items-center" style=" font-weight: bold;color: #5FCF80;">
+                  <i class="bi bi-person user-icon"></i>&nbsp;<?= $subject['user_quantity'] ?>
+                  &nbsp;&nbsp;
+                </div>
+                <br>
+                <div class="d-flex justify-content-between align-items-center">
+                  <?php
+                  $isRegistered = false;
+                  $isCompleted = false;
+                  foreach ($user_subjects as $user_subject) {
+                    if ($subject['id'] === $user_subject['subject_id'] && $user_subject['user_id'] === $_SESSION['user']['id']) {
+                      if ($user_subject['status'] === "Đã Tham Gia") {
+                        $isCompleted = true;
+                      } else {
+                        $isRegistered = true;
+                      }
+                      break;
+                    }
+                  }
+
+                  if ($isCompleted) {
+                    echo '<a href="/subjects/' . $subject['id'] . '" class="btn_2">Xem Khóa Học</a>';
+                  } elseif ($isRegistered) {
+                    // If user is registered but not yet completed, show "Tham Gia Khóa Học"
+                    echo '<a href="/carts/checkout/' . $subject['id'] . '" class="btn_2">Tiếp Tục Tham Gia</a>';
+                  } else {
+                    // If user has not registered yet, show "Tham Gia Khóa Học"
+                    echo '<a href="/carts/checkout/' . $subject['id'] . '" class="btn_2">Tham Gia Khóa Học</a>';
+                  }
+                  ?>
+                  <span class="text-secondary fw-bold"> <?= number_format($subject['price'], 0); ?> VND</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php } ?>
     <br>
     <nav class="d-flex justify-content-center">
       <ul class="pagination">

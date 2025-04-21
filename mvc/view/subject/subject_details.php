@@ -22,7 +22,7 @@
                                    data-id="<?= htmlspecialchars($lesson['id']) ?>"
                                    data-video="<?= htmlspecialchars($lesson['video']) ?>"
                                    style="text-decoration: none;">
-                                    ▶ Xem Video Bài Học
+                                    ▶ Xem Video Bài Học 
                                 </a>
                             </div>
                         </li>

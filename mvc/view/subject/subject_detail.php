@@ -1,7 +1,13 @@
+<div class="page-title" data-aos="fade">
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li class="current"><?= htmlspecialchars($subject['name']) ?></li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Page Title -->
 <div class="container py-5">
-    <!-- Tiêu đề -->
-    <h2 class="text-center mb-5 fw-bold"><?= htmlspecialchars($subject['name']) ?></h2>
-
     <div class="row g-4">
         <!-- Cột Video & Bình luận -->
         <div class="col-lg-8">
@@ -70,9 +76,10 @@
             <?php if (!empty($lessons)): ?>
                 <div class="mb-4">
                     <?php foreach ($progresses as $progress): if ($subject['id'] === $progress['subject_id'] && $progress['user_id'] === $_SESSION['user']['id']) { ?>
-                            <div class="mb-2 fw-semibold">Tiến độ khóa học: <span class="text-success"><?= htmlspecialchars(($progress['number_submit'] / $progress['number_test']) * 100) ?> %</span></div>
-                            <div class="progress" style="height: 20px;">
-                                <div class="progress-bar bg-success" style="width:<?= htmlspecialchars(($progress['number_submit'] / $progress['number_test']) * 100) ?>%;"></div>
+                            <div class="progress" style="height: 10px;">
+                                <div class="progress-bar" 
+                                style="width:<?= htmlspecialchars(($progress['number_submit'] / $progress['number_test']) * 100) ?>%; background-color: #5FCF80;">
+                            </div>
                             </div>
                             <?php if(($progress['number_submit'] / $progress['number_test']) * 100 === 100){?>
                             <form action="/create/sendemail" method="POST" class="mt-3">
@@ -93,21 +100,21 @@
                     <?php foreach ($lessons as $index => $lesson): ?>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading<?= $lesson['id'] ?>">
-                                <button class="accordion-button <?= $index !== 0 ? 'collapsed' : '' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $lesson['id'] ?>" aria-expanded="<?= $index === 0 ? 'true' : 'false' ?>">
+                                <button style="font-weight: bolder;" class="accordion-button <?= $index !== 0 ? 'collapsed' : '' ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $lesson['id'] ?>" aria-expanded="<?= $index === 0 ? 'true' : 'false' ?>">
                                     <?= htmlspecialchars($lesson['title']) ?>
                                 </button>
                             </h2>
                             <div id="collapse<?= $lesson['id'] ?>" class="accordion-collapse collapse <?= $index === 0 ? 'show' : '' ?>" data-bs-parent="#lessonAccordion">
                                 <div class="accordion-body">
-                                    <a href="javascript:void(0);" class="lesson-link text-primary fw-semibold" data-id="<?= htmlspecialchars($lesson['id']) ?>" data-video="<?= htmlspecialchars($lesson['video']) ?>">
-                                        ▶️ Xem Video Bài Học
+                                    <a href="javascript:void(0);" class="lesson-link text-primary fw-semibold" data-id="<?= htmlspecialchars($lesson['id']) ?>" data-video="<?= htmlspecialchars($lesson['video']) ?>" style="text-decoration: none;">
+                                         Xem Video Bài Học
                                     </a>
 
                                     <?php foreach ($tests as $test): ?>
                                         <?php if ($test['lessons_id'] == $lesson['id']): ?>
                                             <div class="mt-2">
-                                                <a href="/subjects/quiz/<?= htmlspecialchars($test['id']) ?>" class="text-success fw-semibold">
-                                                    📝 Quiz: <?= htmlspecialchars($test['title']) ?>
+                                                <a href="/subjects/quiz/<?= htmlspecialchars($test['id']) ?>" class="text-success fw-semibold" style="text-decoration: none;">
+                                                     Quiz: <?= htmlspecialchars($test['title']) ?>
                                                 </a>
                                             </div>
                                         <?php endif; ?>

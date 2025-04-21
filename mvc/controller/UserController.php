@@ -17,6 +17,12 @@ class UserController
         renderView("view/users/profile.php", compact('users'), "User List");
     }
 
+    public function trainers()
+    {
+        $users = $this->userModel->getAllUser();
+        renderView("view/trainers/list.php", compact('users'), "User List");
+    }
+
     public function show($id)
     {
         $user = $this->userModel->getUserById($id);
