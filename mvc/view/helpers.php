@@ -18,3 +18,19 @@ function renderAdminView($view, $data = [], $title = "Admin Panel")
     $content = ob_get_clean();
     require "view/layouts/admin2.php";
 }
+function renderMasterView($view, $data = [], $title = "Admin Panel")
+{
+    extract($data);
+    ob_start();
+    require $view;
+    $content = ob_get_clean();
+    require "view/layouts/admin_master.php";
+}
+function renderViewNomenu($view, $data = [], $title = "Admin Panel")
+{
+    extract($data);
+    ob_start();
+    require $view;
+    $content = ob_get_clean();
+    require "view/layouts/no_menu.php";
+}

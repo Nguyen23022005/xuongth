@@ -1,7 +1,7 @@
-<?php 
-    $totalRevenue = 0;
-    $totalUser = 0;
-    $doanhthu = 0;
+<?php
+$totalRevenue = 0;
+$totalUser = 0;
+$doanhthu = 0;
 ?>
 <div class="container mt-5">
     <h4 class="mb-4 text-center">📅 Bộ Lọc Thống Kê Doanh Thu</h4>
@@ -42,14 +42,14 @@
 
     <?php if (!empty($subjects) && is_array($subjects)): ?>
         <div class="row text-center mb-4">
-            <?php 
-                foreach ($subjects as $subject) {
-                    if ($subject['user_quantity'] !== 0) {
-                        $totalRevenue += (int)$subject['price'];
-                        $totalUser += (int)$subject['user_quantity'];
-                        $doanhthu += (int)$subject['price'] * $subject['user_quantity'];
-                    }
+            <?php
+            foreach ($subjects as $subject) {
+                if ($subject['user_quantity'] !== 0) {
+                    $totalRevenue += (int)$subject['price'] * (int)$subject['user_quantity'];
+                    $totalUser += (int)$subject['user_quantity'];
+                    $doanhthu = $totalRevenue;
                 }
+            }
             ?>
             <div class="col-md-6 mb-3">
                 <div class="card border-success shadow-sm h-100">
@@ -90,7 +90,7 @@
                     </thead>
                     <tbody>
                         <?php foreach ($subjects as $subject): ?>
-                            <?php if ($subject['user_quantity'] !== 0): ?>
+                            <?php if ($subject['user_quantity'] !== 0 && $subject['user_id'] === $_SESSION['user']['id']): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($subject['name']) ?></td>
                                     <td><?= number_format($subject['user_quantity'], 0, ',', '.') ?> lượt</td>
@@ -112,5 +112,3 @@
         </div>
     <?php endif; ?>
 </div>
-
-

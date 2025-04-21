@@ -348,4 +348,10 @@ class SubjectController
         $subjects = $this->subjectsModel->getAllSubjects();
         renderAdminView("view/total_revenue/list.php", compact('subjects'), "Course List");
     }
+    public function doanhthu_admin()
+    {
+        $users = $this->userModel->getAllUser();
+        $subjects = $this->subjectsModel->getAllSubjects();
+        renderMasterView("view/revenue_admin/list.php", compact('subjects','users'), "Course List");
+    }
 }

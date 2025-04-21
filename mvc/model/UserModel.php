@@ -55,12 +55,13 @@ class UserModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createUser($name, $email, $password) {
-        $query = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
+    public function createUser($name, $email, $password ,$role) {
+        $query = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':role', $role);
         return $stmt->execute();
     }
 
@@ -122,5 +123,6 @@ class UserModel {
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+   
 }
 ?>

@@ -55,6 +55,7 @@
         <ul class="navbar">
           <li><a href="/" style="text-decoration: none;">Trang Chủ<br></a></li>
           <li><a href="/course" style="text-decoration: none;">Khóa Học Của Bạn</a></li>
+          <li><a href="/trainers" style="text-decoration: none;">Giảng Viên</a></li>
           <li><a href="/index1" style="text-decoration: none;">Tin tức</a></li>
           <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -66,6 +67,9 @@
                             <?php endif; ?>
                             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                                 <li><a class="dropdown-item" href="/subjects">Trang Quản Trị</a></li>
+                            <?php endif; ?>
+                            <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'quanly'): ?>
+                                <li><a class="dropdown-item" href="/users_admin">Trang Quản Trị</a></li>
                             <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
                             <?php if (isset($_SESSION['user'])): ?>

@@ -11,6 +11,8 @@ require_once "controller/TestController.php";
 require_once "controller/UserController.php";
 require_once "controller/CommentController.php";
 require_once "controller/BlogController.php";
+require_once "controller/AdminUserController.php";
+
 
 
 
@@ -29,6 +31,7 @@ $testController = new TestController();
 $userController = new UserController();
 $commentController = new CommentController();
 $blogController = new BlogController();
+$adminuserController = new AdminUserController();
 
 
 $router->addRoute("/admin", function () {
@@ -48,6 +51,7 @@ $router->addRoute("/auth/profile", [$authController, "profile"]);
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
+$router->addRoute("/role", [$authController, "role"]);
 $router->addRoute("/login", [$authController, "login"]);
 $router->addRoute("/logout", [$authController, "logout"]);
 $router->addRoute("/register", [$authController, "register"]);
@@ -57,6 +61,15 @@ $router->addRoute("/thongbao", [$authController, "thongbao"]);
 
 $router->addRoute("/profile", [$userController, "index"]);
 $router->addRoute("/trainers", [$userController, "trainers"]);
+$router->addRoute("/trainer/{id}", [$userController, "show_trainers"]);
+
+$router->addRoute("/users_admin", [$adminuserController, "index"]);
+$router->addRoute("/users/create", [$adminuserController, "create"]);
+$router->addRoute("/users/edit/{id}", [$adminuserController, "edit"]);
+$router->addRoute("/users/delete/{id}", [$adminuserController, "delete"]);
+
+
+
 
 $router->addRoute("/profile/edit/{id}", [$userController, "edit"]);
 $router->addRoute("/admin_profile/edit/{id}", [$userController, "edit_admin"]);
@@ -90,6 +103,7 @@ $router->addRoute("/create/sendemail", [$subjectsController, "subject_email"]);
 $router->addRoute("/subjects/email/{id}", [$subjectsController, "show_email"]);
 
 $router->addRoute("/totals", [$subjectsController, "doanhthu"], ['isAdmin']);
+$router->addRoute("/total_admin", [$subjectsController, "doanhthu_admin"], ['isQuanly']);
 
 
 // 

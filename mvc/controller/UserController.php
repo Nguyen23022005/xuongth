@@ -1,14 +1,17 @@
 <?php
 require_once "model/UserModel.php";
+require_once "model/SubjectModel.php";
 require_once "view/helpers.php";
 
 class UserController
 {
     private $userModel;
+    private $subjectsModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->subjectsModel = new SubjectsModel();
     }
 
     public function index()
@@ -22,7 +25,12 @@ class UserController
         $users = $this->userModel->getAllUser();
         renderView("view/trainers/list.php", compact('users'), "User List");
     }
-
+    public function show_trainers($id)
+    {
+        $subjects = $this->subjectsModel->getAllSubjects();
+        $user = $this->userModel->getUserById($id);
+        renderView("view/trainers/detail.php", compact('user','subjects'), "User List");
+    }
     public function show($id)
     {
         $user = $this->userModel->getUserById($id);
@@ -54,7 +62,7 @@ class UserController
 
 
             if (empty($errors)) {
-                $this->userModel->createUser($name, $email, $password);
+                $this->userModel->createUser($name, $email, $password,$role);
                 $_SESSION['success_message'] = "product created successfully!";
                 header("Location: /users");
                 exit;

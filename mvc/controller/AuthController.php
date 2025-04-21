@@ -84,7 +84,7 @@ class AuthController
                     $password = $auth['password'];
                 }
 
-                if ($this->authModel->updateAuth($id, $name, $email, $password)) {
+                if ($this->authModel->updateAuth($id, $name, $email, $password,$role)) {
                     $_SESSION['success_message'] = "Cập nhật tài khoản thành công!";
                     header("Location: /auth");
                     exit;
@@ -115,25 +115,45 @@ class AuthController
     }
 
     public function register()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            require_once "model/ValidateModel.php";
-            $validate = new Validate();
-    
-            $name = trim($_POST['name']);
-            $email = trim($_POST['email']);
-            $password = $_POST['password'];
-            $role = $_POST['role'];
-    
+{
+    $step = $_POST['step'] ?? '1';
+    $errors = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once "model/ValidateModel.php";
+        $validate = new Validate();
+
+        $name = trim($_POST['name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $role = $_POST['role'] ?? '';
+
+        if ($step === '1') {
+            // Bước 1: chỉ kiểm tra tên, email, mật khẩu
             $validate->checkRequired('name', $name, "Tên không được để trống.");
             $validate->checkEmail('email', $email, "Email không hợp lệ.");
             $validate->checkRequired('password', $password, "Mật khẩu không được để trống.");
-            $validate->checkRequired('role', $role, "Vai trò không được để trống.");
-    
+
             if ($this->authModel->checkEmailExists($email)) {
                 $validate->addError('email', "Email đã tồn tại trong hệ thống.");
             }
-    
+
+            if (!$validate->passed()) {
+                $errors = $validate->getErrors();
+                renderView("view/auth/register.php", compact('errors'), "Đăng ký");
+                return;
+            }
+
+            // Chuyển sang bước 2
+            $_POST['step'] = '2';
+            renderView("view/auth/register.php", [], "Đăng ký");
+            return;
+        }
+
+        if ($step === '2') {
+            // Bước 2: kiểm tra role và tiến hành đăng ký
+            $validate->checkRequired('role', $role, "Vai trò không được để trống.");
+
             if ($validate->passed()) {
                 if ($this->authModel->register($name, $email, $password, $role)) {
                     $_SESSION['success_message'] = "Đăng ký thành công! Vui lòng đăng nhập.";
@@ -145,13 +165,16 @@ class AuthController
             } else {
                 $errors = $validate->getErrors();
             }
-    
+
             renderView("view/auth/register.php", compact('errors'), "Đăng ký");
             return;
         }
-    
-        renderView("view/auth/register.php", [], "Đăng ký");
     }
+
+    // Truy cập lần đầu (GET) hoặc fallback
+    renderView("view/auth/register.php", [], "Đăng ký");
+}
+
 
     public function login()
     {

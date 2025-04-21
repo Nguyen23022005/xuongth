@@ -9,6 +9,7 @@ function isAdmin() {
     header("Location: /login");
     exit;
 }
+
 function isQuanly(){
     if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'quanly'){
         return true;

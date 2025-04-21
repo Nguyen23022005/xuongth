@@ -39,14 +39,15 @@ class AuthModel
         return $stmt->execute();
     }
 
-    public function updateAuth($id, $name, $email, $password)
+    public function updateAuth($id, $name, $email,$role)
     {
-        $query = "UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id";
+        $query = "UPDATE users SET name = :name, email = :email, role = :role WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':role', $role);
+
         return $stmt->execute();
     }
 
