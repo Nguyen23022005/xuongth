@@ -44,7 +44,7 @@ $doanhthu = 0;
         <div class="row text-center mb-4">
             <?php
             foreach ($subjects as $subject) {
-                if ($subject['user_quantity'] !== 0) {
+                if ($subject['user_quantity'] !== 0 && $subject['user_id'] === $_SESSION['user']['id']) {
                     $totalRevenue += (int)$subject['price'] * (int)$subject['user_quantity'];
                     $totalUser += (int)$subject['user_quantity'];
                     $doanhthu = $totalRevenue;
